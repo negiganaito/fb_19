@@ -1,0 +1,72 @@
+{
+  "exclude": ["node_modules", "build"],
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES6",
+    "baseUrl": ".",
+    "paths": {
+      "@meta-business/button/*": ["./src/business/button/*"],
+      "@meta-business/card/*": ["./src/business/card/*"],
+      "@meta-business/contexts/*": ["./src/business/contexts/*"],
+      "@meta-business/contextual/*": ["./src/business/contextual/*"],
+      "@meta-business/hooks/*": ["./src/business/hooks/*"],
+      "@meta-business/image/*": ["./src/business/image/*"],
+      "@meta-business/layout/*": ["./src/business/layout/*"],
+      "@meta-business/popover/*": ["./src/business/popover/*"],
+      "@meta-business/pressable/*": ["./src/business/pressable/*"],
+      "@meta-business/shell/*": ["./src/business/shell/*"],
+      "@meta-business/styles/*": ["./src/business/styles/*"],
+      "@meta-business/text/*": ["./src/business/text/*"],
+      "@meta-business/theme/*": ["./src/business/theme/*"],
+      "@meta-business/tooltip/*": ["./src/business/tooltip/*"],
+      "@meta-business/utils/*": ["./src/business/utils/*"],
+      "@meta-business/toaster/*": ["./src/business/toaster/*"],
+      "@meta-business/dialog/*": ["./src/business/dialog/*"],
+      "@meta-business/unknown/*": ["./src/business/unknown/*"],
+      "@meta-business/glimmer/*": ["./src/business/glimmer/*"],
+      "@meta-business/error/*": ["./src/business/error/*"],
+
+      //
+      "@meta-core/button/*": ["./src/core/button/*"],
+      "@meta-core/contexts/*": ["./src/core/contexts/*"],
+      "@meta-core/contextual/*": ["./src/core/contextual/*"],
+      "@meta-core/error/*": ["./src/core/error/*"],
+      "@meta-core/event-interaction/*": ["./src/core/event-interaction/*"],
+      "@meta-core/focus/*": ["./src/core/focus/*"],
+      "@meta-core/hooks/*": ["./src/core/hooks/*"],
+      "@meta-core/image/*": ["./src/core/image/*"],
+      "@meta-core/keyboard/*": ["./src/core/keyboard/*"],
+      "@meta-core/layout/*": ["./src/core/layout/*"],
+      "@meta-core/link/*": ["./src/core/link/*"],
+      "@meta-core/placeholder/*": ["./src/core/placeholder/*"],
+      //meta-coreore/popover": ["./src/business/popover/*"],
+      "@meta-core/pressable/*": ["./src/core/pressable/*"],
+      "@meta-core/react-components/*": ["./src/core/react-components/*"],
+      "@meta-core/react-utils/*": ["./src/core/react-utils/*"],
+      "@meta-core/scheduler/*": ["./src/core/scheduler/*"],
+      "@meta-core/styles/*": ["./src/core/styles/*"],
+      "@meta-core/theme/*": ["./src/core/theme/*"],
+      "@meta-core/utils/*": ["./src/core/utils/*"],
+      "@meta-core/toast/*": ["./src/core/toast/*"],
+      "@meta-core/unknown/*": ["./src/core/unknown/*"],
+      "@meta-core/callout/*": ["./src/core/callout/*"],
+      "@meta-core/constant/*": ["./src/core/constant/*"],
+      "@meta-core/text/*": ["./src/core/text/*"],
+      "@meta-core/dialog/*": ["./src/core/dialog/*"],
+      "@meta-core/view/*": ["./src/core/view/*"],
+      "@meta-core/glimmer/*": ["./src/core/glimmer/*"],
+      "@meta-core/lazy-load-component/*": ["./src/core/lazy-load-component/*"],
+      "@meta-core/network/*": ["./src/core/network/*"],
+      "@meta-core/process-ring/*": ["./src/core/process-ring/*"],
+      "@meta-core/tooltip/*": ["./src/core/tooltip/*"],
+      "@meta-core/relay/*": ["./src/core/relay/*"],
+
+      //
+      "@meta-icons/*": ["./src/icons/*"],
+
+      //
+      "@meta-example/*": ["./src/example/*"]
+    }
+  }
+}
