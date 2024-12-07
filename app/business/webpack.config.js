@@ -18,6 +18,8 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const envv = require('./scripts/env');
 const TerserPlugin = require('terser-webpack-plugin');
 
+const { defineReactCompilerLoaderOption, reactCompilerLoader } = require('react-compiler-webpack');
+
 // const reactCompilerLoader = require.resolve("./scripts/react-compiler-loader");
 // const defineReactCompilerLoaderOption = (options) => options;
 // const {
@@ -95,12 +97,12 @@ module.exports = (env, { mode }) => {
                 // ),
               },
             },
-            // {
-            //   loader: reactCompilerLoader,
-            //   options: defineReactCompilerLoaderOption({
-            //     // React Compiler options goes here
-            //   }),
-            // },
+            {
+              loader: reactCompilerLoader,
+              options: defineReactCompilerLoaderOption({
+                // React Compiler options goes here
+              }),
+            },
           ],
         },
         {
@@ -111,30 +113,52 @@ module.exports = (env, { mode }) => {
         {
           test: /\.css$/i,
           use: [
-            { loader: MiniCssExtractPlugin.loader },
+            // { loader: MiniCssExtractPlugin.loader },
+            // {
+            //   loader: 'css-loader',
+            //   options: {
+            //     importLoaders: 1,
+            //     // modules: true,
+            //     sourceMap: true,
+            //   },
+            // },
+            // {
+            //   loader: 'postcss-loader',
+            //   options: {
+            //     postcssOptions: {
+            //       plugins: [
+            //         [
+            //           'postcss-preset-env',
+            //           {
+            //             autoprefixer: {
+            //               grid: true,
+            //               flexbox: true,
+            //             },
+            //           },
+            //         ],
+            //       ],
+            //     },
+            //   },
+            // },
+
+            // chatgpt
+            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
             {
               loader: 'css-loader',
               options: {
+                modules: {
+                  auto: true, // Automatically enable CSS modules for `.module.css`
+                  localIdentName: '[name]__[local]__[hash:base64:5]',
+                },
+                sourceMap: isDevelopment,
                 importLoaders: 1,
-                // modules: true,
-                sourceMap: true,
               },
             },
             {
               loader: 'postcss-loader',
               options: {
                 postcssOptions: {
-                  plugins: [
-                    [
-                      'postcss-preset-env',
-                      {
-                        autoprefixer: {
-                          grid: true,
-                          flexbox: true,
-                        },
-                      },
-                    ],
-                  ],
+                  plugins: ['postcss-preset-env'],
                 },
               },
             },

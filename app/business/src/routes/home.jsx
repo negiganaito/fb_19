@@ -1,8 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-console.log({ React, ReactDOM });
+import React, { useState } from 'react';
 
 export const Home = () => {
-  return <div>123</div>;
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
 };

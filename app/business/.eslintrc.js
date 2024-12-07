@@ -85,6 +85,7 @@ module.exports = {
     'no-function-declare-after-return',
     'no-only-tests',
     '@stylexjs',
+    'eslint-plugin-react-compiler',
   ],
 
   // Stop ESLint from looking for a configuration file in parent folders
@@ -161,5 +162,7 @@ module.exports = {
     //     ObjectPattern: { minProperties: 4, multiline: true, consistent: true },
     //   },
     // ],
+
+    'react-compiler/react-compiler': 'error',
   },
 };
