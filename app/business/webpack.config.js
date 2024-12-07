@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Dotenv = require('dotenv-webpack');
+// const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const { ESBuildMinifyPlugin } = require("esbuild-loader");
@@ -59,10 +59,17 @@ module.exports = (env, { mode }) => {
     },
 
     output: {
-      publicPath: '/',
+      // publicPath: '/',
+      // path: path.resolve(__dirname, 'build'),
+      // filename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      // chunkFilename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+
+      // chatgpt
       path: path.resolve(__dirname, 'build'),
-      filename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
-      chunkFilename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      filename: 'js/[name].[contenthash].js',
+      chunkFilename: 'js/[name].[contenthash].js',
+      assetModuleFilename: 'assets/[hash][ext][query]', // Manage static assets
+      publicPath: '/',
     },
 
     module: {
@@ -208,27 +215,38 @@ module.exports = (env, { mode }) => {
     cache: true,
 
     plugins: [
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({
+        filename: 'styles/[name].[contenthash].css',
+      }),
 
       new HtmlWebpackPlugin({
+        // template: path.join(__dirname, 'public', 'index.html'),
+        // minify: isProduction,
+        // hash: isProduction,
+        // cache: isProduction,
+        // showErrors: !isProduction,
+
+        // chatgpt
         template: path.join(__dirname, 'public', 'index.html'),
+        inject: true,
         minify: isProduction,
-        hash: isProduction,
-        cache: isProduction,
-        showErrors: !isProduction,
       }),
 
-      new Dotenv({
-        systemvars: true,
-      }),
+      // new Dotenv({
+      //   systemvars: true,
+      // }),
 
       new CleanWebpackPlugin({ verbose: false }),
 
       new webpack.ProgressPlugin(),
       // new webpack.EnvironmentPlugin(["NODE_ENV"]),
 
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      // new webpack.EnvironmentPlugin({
+      //   NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      // }),
+
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(mode),
       }),
 
       new CopyPlugin({
@@ -274,35 +292,63 @@ module.exports = (env, { mode }) => {
       .filter(Boolean),
 
     optimization: {
+      // minimize: isProduction,
+      // mergeDuplicateChunks: true,
+      // removeEmptyChunks: true,
+      // sideEffects: false,
+      // minimizer: [
+      //   // new ESBuildMinifyPlugin({
+      //   //   target: "es2015",
+      //   // }),
+      //   new TerserPlugin({
+      //     extractComments: false,
+      //   }),
+      // ],
+      // splitChunks: {
+      //   chunks: 'all',
+      //   cacheGroups: {
+      //     vendors: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       chunks: 'all',
+      //       enforce: true,
+      //       name: (module) => {
+      //         const [, match] = module.context.match(
+      //           /[\\/]node_modules[\\/](.*?)([\\/]([^\\/]*)([\\/]([^\\/]*))?([\\/]([^\\/]*))?|$)/,
+      //         );
+
+      //         return `vendors/${match.replace('@', '')}`;
+      //       },
+      //     },
+      //   },
+      // },
+
+      // chatgpt
       minimize: isProduction,
-      mergeDuplicateChunks: true,
-      removeEmptyChunks: true,
-      sideEffects: false,
-      minimizer: [
-        // new ESBuildMinifyPlugin({
-        //   target: "es2015",
-        // }),
-        new TerserPlugin({
-          extractComments: false,
-        }),
-      ],
+      runtimeChunk: 'single', // Separate runtime code
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
-          vendors: {
+          defaultVendors: {
             test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
             chunks: 'all',
-            enforce: true,
-            name: (module) => {
-              const [, match] = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]([^\\/]*)([\\/]([^\\/]*))?([\\/]([^\\/]*))?|$)/,
-              );
-
-              return `vendors/${match.replace('@', '')}`;
-            },
+            priority: -10,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
           },
         },
       },
+      minimizer: [
+        new TerserPlugin({
+          extractComments: false,
+          terserOptions: {
+            compress: { drop_console: isProduction }, // Remove `console.log` in production
+          },
+        }),
+      ],
     },
 
     performance: {
@@ -313,24 +359,38 @@ module.exports = (env, { mode }) => {
     devtool: isProduction ? 'source-map' : 'inline-source-map',
 
     devServer: {
-      allowedHosts: 'all',
-      // client: false,
-      devMiddleware: {
-        publicPath: `http://localhost:${envv.PORT}/`,
-        writeToDisk: true,
+      // allowedHosts: 'all',
+      // // client: false,
+      // devMiddleware: {
+      //   publicPath: `http://localhost:${envv.PORT}/`,
+      //   writeToDisk: true,
+      // },
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      // },
+      // historyApiFallback: true,
+      // host: 'localhost',
+      // hot: true,
+      // https: false,
+      // open: true,
+      // port: envv.PORT,
+      // static: {
+      //   directory: path.join(__dirname, 'build'),
+      // },
+
+      port: envv.PORT || 3000,
+      hot: true,
+      open: true,
+      historyApiFallback: true,
+      static: {
+        directory: path.resolve(__dirname, 'build'),
       },
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      historyApiFallback: true,
-      host: 'localhost',
-      hot: true,
-      https: false,
-      open: true,
-      port: envv.PORT,
-      static: {
-        directory: path.join(__dirname, 'build'),
-      },
+      // proxy: {
+      //   '/api': 'http://localhost:5000', // Example: API Proxying
+      // },
     },
 
     stats: {
