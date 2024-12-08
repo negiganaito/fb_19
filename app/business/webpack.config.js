@@ -41,12 +41,7 @@ module.exports = (env, { mode }) => {
       // extensions: ['.ts', '.tsx', '.js', '.jsx'],
       extensions: fileExtensions.map((extension) => '.' + extension).concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
 
-      alias: {
-        '@meta-core': path.resolve(__dirname, 'src/core'),
-        '@meta-business': path.resolve(__dirname, 'src/business'),
-        '@meta-icons': path.resolve(__dirname, 'src/icons'),
-        '@meta-example': path.resolve(__dirname, 'src/example'),
-      },
+      alias: {},
 
       fallback: {
         path: require.resolve('path-browserify'),
