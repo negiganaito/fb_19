@@ -6,7 +6,11 @@
     "target": "ES6",
     "baseUrl": ".",
     "paths": {
-      "@fb-utils/*": ["./src/utils/*"]
+      "@fb-utils/*": ["./src/utils/*"],
+      "@fb-contexts/*": ["./src/contexts/*"],
+      "@fb-error/*": ["./src/error/*"],
+      "@fb-placeholder/*": ["./src/placeholder/*"],
+      "@fb-hooks/*": ["./src/hooks/*"]
     }
   }
 }

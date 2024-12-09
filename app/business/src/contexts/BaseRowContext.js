@@ -1,3 +1,8 @@
+/**
+ * Changelog:
+ * - 09/12/2024
+ */
+
 import { createContext } from 'react';
 
 /**

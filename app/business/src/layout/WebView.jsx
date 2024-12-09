@@ -1,3 +1,8 @@
+/**
+ * Changelog:
+ * - 09/12/2024
+ */
+
 import { forwardRef } from 'react';
 import { jsx } from 'react/jsx-runtime';
 import { babelHelpers } from '@fb-utils/babelHelpers';
