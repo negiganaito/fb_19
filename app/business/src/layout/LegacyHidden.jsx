@@ -3,9 +3,7 @@
  * - 09/12/2024
  */
 
-import { forwardRef, unstable_LegacyHidden } from 'react';
-import { jsx } from 'react/jsx-dev-runtime';
-import { babelHelpers } from '@fb-utils/babelHelpers';
+import React, { forwardRef, unstable_LegacyHidden as UnstableLegacyHidden } from 'react';
 
 /** @typedef {Object} LegacyHiddenPropTypes
  *  @property {React.ReactNode} children - The content to render inside the div.
@@ -26,17 +24,17 @@ import { babelHelpers } from '@fb-utils/babelHelpers';
 const LegacyHidden = forwardRef((props, ref) => {
   const { children, htmlAttributes, mode, suppressHydrationWarning } = props;
 
-  return jsx(
-    'div',
-    babelHelpers.extends({}, htmlAttributes, {
-      hidden: mode === 'hidden' ? true : undefined,
-      ref,
-      suppressHydrationWarning,
-      children: jsx(unstable_LegacyHidden, {
-        mode: mode === 'hidden' ? 'unstable-defer-without-hiding' : mode,
-        children,
-      }),
-    }),
+  return (
+    <div
+      {...htmlAttributes}
+      hidden={mode === 'hidden' ? true : undefined}
+      ref={ref}
+      suppressHydrationWarning={suppressHydrationWarning}
+    >
+      <UnstableLegacyHidden mode={mode === 'hidden' ? 'unstable-defer-without-hiding' : mode}>
+        {children}
+      </UnstableLegacyHidden>
+    </div>
   );
 });
 

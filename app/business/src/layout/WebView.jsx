@@ -3,9 +3,7 @@
  * - 09/12/2024
  */
 
-import { forwardRef } from 'react';
-import { jsx } from 'react/jsx-runtime';
-import { babelHelpers } from '@fb-utils/babelHelpers';
+import React, { forwardRef } from 'react';
 import { testID } from '@fb-utils/testID';
 import stylex from '@stylexjs/stylex';
 
@@ -31,17 +29,22 @@ const styles = stylex.create({
 const WebView = forwardRef((props, ref) => {
   const { children, suppressHydrationWarning, testid, xstyle, ...restProps } = props;
 
-  let isHidden = props.hidden === true;
+  const isHidden = props.hidden === true;
 
-  return jsx(LegacyHidden, {
-    htmlAttributes: babelHelpers.extends({}, restProps, testID(testid), {
-      className: stylex(styles.root, xstyle, isHidden && styles.hidden),
-    }),
-    mode: isHidden ? 'hidden' : 'visible',
-    ref,
-    suppressHydrationWarning,
-    children,
-  });
+  return (
+    <LegacyHidden
+      htmlAttributes={{
+        ...restProps,
+        ...testID(testid),
+        className: stylex(styles.root, xstyle, isHidden && styles.hidden),
+      }}
+      mode={isHidden ? 'hidden' : 'visible'}
+      ref={ref}
+      suppressHydrationWarning={suppressHydrationWarning}
+    >
+      {children}
+    </LegacyHidden>
+  );
 });
 
 export { WebView };

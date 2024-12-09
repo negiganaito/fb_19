@@ -3,7 +3,7 @@
  * - 09/12/2024
  */
 
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef } from 'react';
 import { BaseRowContext } from '@fb-contexts/BaseRowContext';
 import { useBaseRowA11yWrap } from '@fb-hooks/useBaseRowA11yWrap';
 import { useMergeRefs } from '@fb-utils/useMergeRefs';
@@ -36,14 +36,6 @@ const BaseRow = forwardRef((props, ref) => {
     ...restProps //
   } = props;
 
-  // e[13]
-  // const baseRowContextValue = useMemo(() => {
-  //   return {
-  //     columns,
-  //     wrap,
-  //   };
-  // }, [columns, wrap]);
-
   const baseRowContextValue = {
     columns,
     wrap,
@@ -59,13 +51,13 @@ const BaseRow = forwardRef((props, ref) => {
     renderedChildren = [children[1], children[0]];
   }
 
-  let expandingStyle = expanding && styles.expanding;
-  let justifyStyle =
+  const expandingStyle = expanding && styles.expanding;
+  const justifyStyle =
     justifyStyles[direction === 'backward' && (align === 'start' || align === 'end') ? reverseDirection[align] : align];
 
-  let alignStyle = alignStyles[verticalAlign];
-  let wrapStyle = wrapStyles[wrap];
-  let reversedWrapStyle =
+  const verticalAlignStyle = verticalAlignStyles[verticalAlign];
+  const wrapStyle = wrapStyles[wrap];
+  const reversedWrapStyle =
     isWrapped &&
     direction === 'forward' &&
     wrap === 'backward' &&
@@ -73,12 +65,12 @@ const BaseRow = forwardRef((props, ref) => {
     children.length === 2 &&
     wrapStyles.forward;
 
-  let directionStyle = directionStyles[direction];
-  let rowStyles = [
+  const directionStyle = directionStyles[direction];
+  const rowStyles = [
     styles.row,
     expandingStyle,
     justifyStyle,
-    alignStyle,
+    verticalAlignStyle,
     wrapStyle,
     reversedWrapStyle,
     directionStyle,
@@ -125,7 +117,7 @@ const justifyStyles = stylex.create({
   },
 });
 
-const alignStyles = stylex.create({
+const verticalAlignStyles = stylex.create({
   bottom: {
     alignItems: 'flex-end',
   },

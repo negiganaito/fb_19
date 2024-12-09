@@ -1,12 +1,11 @@
 import React from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
+import { ExamplePage } from './example';
 import { Home } from './home';
 
 const AuthLayout = () => {
-  return (
-    <Outlet />
-  );
+  return <Outlet />;
 };
 
 function ProtectedLayout() {
@@ -31,6 +30,10 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <Home />,
+          },
+          {
+            path: 'example',
+            element: <ExamplePage />,
           },
         ],
       },

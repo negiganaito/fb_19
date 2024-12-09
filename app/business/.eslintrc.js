@@ -164,5 +164,7 @@ module.exports = {
     // ],
 
     'react-compiler/react-compiler': 'error',
+
+    'react/jsx-no-constructed-context-values': OFF,
   },
 };

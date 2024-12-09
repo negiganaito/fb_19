@@ -41,7 +41,14 @@ module.exports = (env, { mode }) => {
       // extensions: ['.ts', '.tsx', '.js', '.jsx'],
       extensions: fileExtensions.map((extension) => '.' + extension).concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
 
-      alias: {},
+      alias: {
+        '@fb-utils': path.resolve(__dirname, 'src/utils'),
+        '@fb-contexts': path.resolve(__dirname, 'src/contexts'),
+        '@fb-error': path.resolve(__dirname, 'src/error'),
+        '@fb-placeholder': path.resolve(__dirname, 'src/placeholder'),
+        '@fb-hooks': path.resolve(__dirname, 'src/hooks'),
+        '@fb-layout': path.resolve(__dirname, 'src/layout'),
+      },
 
       fallback: {
         path: require.resolve('path-browserify'),
