@@ -1,10 +1,10 @@
 import React from 'react';
-import { BaseRowItemExample } from '@fb-layout/example/BaseRowItem';
+import { LegacyHiddenExample } from '@fb-layout/example/LegacyHidden';
 
 const ExamplePage = () => {
   return (
     <div>
-      <BaseRowItemExample />
+      <LegacyHiddenExample />
     </div>
   );
 };

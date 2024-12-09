@@ -1,3 +1,5 @@
+/* eslint-disable no-sequences */
+/* eslint-disable no-eq-null */
 /* eslint-disable max-params */
 /* eslint-disable no-var */
 /* eslint-disable no-inner-declarations */
