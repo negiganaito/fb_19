@@ -20,3 +20,25 @@ export type BaseRowItemPropType = WebViewPropTypes & {
   useDeprecatedStyles?: boolean;
   verticalAlign?: 'bottom' | 'center' | 'stretch' | 'top';
 };
+
+export type CometRowItemPropTypes = BaseRowItemPropType & {
+  fallback?: any;
+};
+
+export type CometColumnItemPropTypes = WebViewPropTypes & {
+  align?: 'stretch' | 'center' | 'end' | 'start';
+  expanding?: boolean;
+  fallback?: any;
+  paddingHorizontal?: 0 | 4 | 8 | 12 | 16 | 20;
+  paddingVertical?: 0 | 4 | 8 | 12 | 16 | 20 | 24 | 40;
+  paddingTop?: 0 | 4 | 8 | 12 | 16 | 20 | 24 | 40;
+  verticalAlign?: 'top' | 'bottom' | 'center' | 'space-between';
+};
+
+export type CometRowPropTypes = BaseRowItemPropType & {
+  paddingHorizontal?: 4 | 8 | 12 | 16;
+  paddingVertical?: 0 | 4 | 8 | 12 | 16;
+  paddingTop?: 0 | 4 | 8 | 12 | 16;
+  spacingHorizontal?: 4 | 8 | 12 | 16 | 20 | 24 | 32;
+  spacingVertical?: 4 | 8 | 12 | 16 | 20 | 24 | 32;
+};

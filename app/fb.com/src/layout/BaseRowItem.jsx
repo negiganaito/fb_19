@@ -65,7 +65,7 @@ const styles = stylex.create({
     maxWidth: '100%',
     minWidth: 0,
   },
-  // eslint-disable-next-line camelcase
+
   item_DEPRECATED: {
     maxWidth: '100%',
     minWidth: 0,

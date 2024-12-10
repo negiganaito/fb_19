@@ -17,11 +17,11 @@ const reverseDirection = {
 };
 
 /**
- * WebView component that wraps LegacyHidden to manage visibility and rendering.
  *
  * @type React.ForwardRefRenderFunction<?, import("./layout").BaseRowPropType>
  * @returns {React.Element} The rendered component.
  */
+// eslint-disable-next-line complexity
 const BaseRow = forwardRef((props, ref) => {
   const {
     align = 'justify', // a

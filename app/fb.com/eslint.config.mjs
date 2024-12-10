@@ -5,7 +5,7 @@ import babelParser from '@babel/eslint-parser';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import stylexjs from '@stylexjs/eslint-plugin';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+// import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
 import noFunctionDeclareAfterReturn from 'eslint-plugin-no-function-declare-after-return';
@@ -62,6 +62,23 @@ export default [
     },
 
     settings: {
+      'import/resolver': {
+        alias: {
+          map: [
+            ['@fb-utils', './src/utils'], // Replace './src/utils' with the actual path
+            ['@fb-contexts', './src/contexts'],
+            ['@fb-error', './src/error'],
+            ['@fb-placeholder', './src/placeholder'],
+            ['@fb-hooks', './src/hooks'],
+            ['@fb-layout', './src/layout'],
+          ],
+          extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
+        },
+
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'], // Add all relevant extensions
+        },
+      },
       react: {
         version: 'detect',
       },
@@ -164,46 +181,79 @@ export default [
       'eslint:recommended',
       'plugin:@typescript-eslint/eslint-recommended',
       'plugin:@typescript-eslint/recommended',
+      'plugin:import/typescript',
     )
     .map((config) => ({
       ...config,
       files: ['**/*.ts', '**/*.tsx'],
-    })),
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    ...reactPlugin.configs.flat.recommended,
+      ...reactPlugin.configs.flat.recommended,
+      languageOptions: {
+        ...reactPlugin.configs.flat.recommended.languageOptions,
+        globals: {
+          ...globals.browser,
+        },
 
-    plugins: {
-      // react,
-      '@typescript-eslint': typescriptEslint,
-    },
-
-    languageOptions: {
-      ...reactPlugin.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.browser,
+        parser: tsParser,
+        ecmaVersion: 5,
+        sourceType: 'module',
       },
 
-      parser: tsParser,
-      ecmaVersion: 5,
-      sourceType: 'module',
-    },
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 0,
+        '@typescript-eslint/no-this-alias': 0,
 
-    rules: {
-      '@typescript-eslint/ban-ts-comment': 0,
-      '@typescript-eslint/no-this-alias': 0,
+        '@typescript-eslint/no-unused-vars': [
+          2,
+          {
+            args: 'none',
+          },
+        ],
+      },
 
-      '@typescript-eslint/no-unused-vars': [
-        2,
-        {
-          args: 'none',
+      settings: {
+        'import/resolver': {
+          // You will also need to install and configure the TypeScript resolver
+          // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+          typescript: true,
+          node: true,
         },
-      ],
-    },
-  },
+      },
+    })),
+  // {
+  //   files: ['**/*.ts', '**/*.tsx'],
+  //   ...reactPlugin.configs.flat.recommended,
+
+  //   plugins: {
+  //     // react,
+  //     '@typescript-eslint': typescriptEslint,
+  //   },
+
+  //   languageOptions: {
+  //     ...reactPlugin.configs.flat.recommended.languageOptions,
+  //     globals: {
+  //       ...globals.browser,
+  //     },
+
+  //     parser: tsParser,
+  //     ecmaVersion: 5,
+  //     sourceType: 'module',
+  //   },
+
+  //   rules: {
+  //     '@typescript-eslint/ban-ts-comment': 0,
+  //     '@typescript-eslint/no-this-alias': 0,
+
+  //     '@typescript-eslint/no-unused-vars': [
+  //       2,
+  //       {
+  //         args: 'none',
+  //       },
+  //     ],
+  //   },
+  // },
   {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
-    ...reactPlugin.configs.flat.recommended,
+    // ...reactPlugin.configs.flat.recommended,
     rules: {
       'simple-import-sort/imports': [
         'error',
