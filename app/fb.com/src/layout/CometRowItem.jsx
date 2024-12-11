@@ -1,3 +1,8 @@
+/**
+ * Changelog:
+ * - 10/12/2024
+ */
+
 import React, { forwardRef, useContext } from 'react';
 import { CometRowContext } from '@fb-contexts/CometRowContext';
 import { CometErrorBoundary } from '@fb-error/CometErrorBoundary';

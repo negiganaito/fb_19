@@ -1,3 +1,8 @@
+/**
+ * Changelog:
+ * - 10/12/2024
+ */
+
 import React, { forwardRef, useContext } from 'react';
 import { CometColumnContext } from '@fb-contexts/CometColumnContext';
 import stylex from '@stylexjs/stylex';
@@ -5,7 +10,12 @@ import stylex from '@stylexjs/stylex';
 import { BaseView } from './BaseView';
 import { CometColumnItem } from './CometColumnItem';
 
-const _CometColumn = (props, ref) => {
+/**
+ *
+ * @type React.ForwardRefRenderFunction<?, import("./layout").CometColumnPropTypes>
+ * @returns {React.Element} The rendered component.
+ */
+const CometColumn = forwardRef((props, ref) => {
   const {
     align = null,
     children,
@@ -52,9 +62,9 @@ const _CometColumn = (props, ref) => {
   }
 
   return renderColumn;
-};
+});
 
-export const CometColumn = forwardRef(_CometColumn);
+export { CometColumn };
 
 const styles = stylex.create({
   expanding: {

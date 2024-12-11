@@ -42,3 +42,16 @@ export type CometRowPropTypes = BaseRowItemPropType & {
   spacingHorizontal?: 4 | 8 | 12 | 16 | 20 | 24 | 32;
   spacingVertical?: 4 | 8 | 12 | 16 | 20 | 24 | 32;
 };
+
+export type CometColumnPropTypes = WebViewPropTypes & {
+  expanding?: boolean;
+  paddingVertical?: 0 | 4 | 8 | 12 | 16 | 20;
+  paddingTop?: 0 | 4 | 8 | 12 | 16 | 20;
+  xstyle?: any;
+  verticalAlign?: 'top' | 'bottom' | 'center' | 'verticalAlign';
+
+  spacing?: number;
+  align?: string;
+  hasDividers?: boolean;
+  paddingHorizontal?: number;
+};
