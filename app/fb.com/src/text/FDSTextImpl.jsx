@@ -1,10 +1,13 @@
-import React, { forwardRef, useContext, useMemo } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import { BaseTextContext } from '@fb-contexts/BaseTextContext';
 import { CometDensityModeContext } from '@fb-contexts/CometDensityModeContext';
 import { CometTextLangContext } from '@fb-contexts/CometTextLangContext';
 import stylex from '@stylexjs/stylex';
 
+import { BaseHeading } from './BaseHeading';
 import { CometTextTypography } from './CometTextTypography';
+import { FDSLineClamp } from './FDSLineClamp';
+import { FDSTextContext } from './FDSTextContext';
 
 const defaultFunc = {
   useTranslationKeyForTextParent: function () {},
@@ -12,21 +15,10 @@ const defaultFunc = {
 
 const { useTranslationKeyForTextParent } = defaultFunc;
 
-function getTypoColor(color, type) {
-  if (type) {
-    // Check if the type is present in BUTTON_TYPE, otherwise use the provided color
-    // eslint-disable-next-line no-return-assign, no-cond-assign
-    return (type = BUTTON_TYPE[color]) ? type : color;
-  } else {
-    // If no type provided, use the given color directly
-    return color;
-  }
-}
-
 /**
- * @type React.ForwardRefRenderFunction<?, import("./types").TetraTextProps>
+ * @type React.ForwardRefRenderFunction<?, import("./text").FDSTextProps>
  */
-const FDSText = forwardRef((props, ref) => {
+const FDSTextImpl = forwardRef((props, ref) => {
   const {
     align = 'auto',
     children,
@@ -39,7 +31,6 @@ const FDSText = forwardRef((props, ref) => {
     numberOfLines,
     preserveNewLines = false,
     suppressHydrationWarning,
-    testid,
     truncationTooltip,
     type,
   } = props;
@@ -86,13 +77,13 @@ const FDSText = forwardRef((props, ref) => {
               suppressHydrationWarning={suppressHydrationWarning}
             >
               {numberOfLines ? (
-                <CometLineClamp
+                <FDSLineClamp
                   lines={numberOfLines}
                   truncationTooltip={truncationTooltip}
                   xstyle={offsetsValue !== true && offsetValueStyles[offsetsValue]}
                 >
                   {children}
-                </CometLineClamp>
+                </FDSLineClamp>
               ) : (
                 children
               )}
@@ -449,11 +440,4 @@ const hyphensStyles = stylex.create({
   },
 });
 
-const BUTTON_TYPE = {
-  disabled: 'disabledButton',
-  highlight: 'primaryDeemphasizedButton',
-  secondary: 'secondaryButton',
-  white: 'primaryButton',
-};
-
-export { FDSText };
+export { FDSTextImpl };

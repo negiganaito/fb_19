@@ -5,4 +5,5 @@ export const gkx = {
   26341: false,
   4008: false,
   26342: false,
+  8029: false,
 };

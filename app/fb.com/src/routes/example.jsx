@@ -1,10 +1,10 @@
 import React from 'react';
-import { BaseRowExample } from '@fb-layout/example/BaseRow';
+import { FDSTextExample } from '@fb-text/example/FDSTextExample';
 
 const ExamplePage = () => {
   return (
     <div>
-      <BaseRowExample />
+      <FDSTextExample />
     </div>
   );
 };

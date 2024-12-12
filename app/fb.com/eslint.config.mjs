@@ -71,6 +71,7 @@ export default [
             ['@fb-placeholder', './src/placeholder'],
             ['@fb-hooks', './src/hooks'],
             ['@fb-layout', './src/layout'],
+            ['@fb-text', './src/text'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },

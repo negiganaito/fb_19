@@ -2,7 +2,7 @@ import React, { createContext, useContext, useMemo } from 'react';
 
 import { CometTextTypography } from './CometTextTypography';
 
-const FDSTextContext = createContext(null);
+const Context = createContext(null);
 
 const buttonColorMap = {
   disabled: 'disabledButton',
@@ -25,8 +25,8 @@ function resolveButtonColor(color, isButton) {
  * Custom hook to access the FDSTextContext.
  * @returns {object|null} - The current context value or null if not provided.
  */
-export function useFDSTextContext() {
-  return useContext(FDSTextContext);
+function useFDSTextContext() {
+  return useContext(Context);
 }
 
 /**
@@ -37,11 +37,11 @@ export function useFDSTextContext() {
  * @param {string} [props.type] - Typography type.
  * @returns {JSX.Element} - The provider component.
  */
-export function FDSTextContextProvider({ children, color, type }) {
+function FDSTextContextProvider({ children, color, type }) {
   if (type === null) {
     // If no type is provided, render children without context value
     const resolvedChildren = typeof children === 'function' ? children(null) : children;
-    return <FDSTextContext.Provider value={null}>{resolvedChildren}</FDSTextContext.Provider>;
+    return <Context.Provider value={null}>{resolvedChildren}</Context.Provider>;
   }
 
   // Otherwise, use FDSTextContextProviderNonNull
@@ -60,7 +60,7 @@ export function FDSTextContextProvider({ children, color, type }) {
  * @param {string} props.type - Typography type.
  * @returns {JSX.Element} - The provider component.
  */
-export function FDSTextContextProviderNonNull({ children, color, type }) {
+function FDSTextContextProviderNonNull({ children, color, type }) {
   // Get the default color for the typography type
   const defaultColor = CometTextTypography[type]?.defaultColor || 'primary';
 
@@ -71,10 +71,16 @@ export function FDSTextContextProviderNonNull({ children, color, type }) {
   const contextValue = useMemo(() => ({ color: resolvedColor, type }), [resolvedColor, type]);
 
   return (
-    <FDSTextContext.Provider value={contextValue}>
+    <Context.Provider value={contextValue}>
       {typeof children === 'function' ? children(contextValue) : children}
-    </FDSTextContext.Provider>
+    </Context.Provider>
   );
 }
 
 FDSTextContextProviderNonNull.displayName = 'FDSTextContextProviderNonNull';
+
+export const FDSTextContext = {
+  useFDSTextContext,
+  FDSTextContextProvider,
+  FDSTextContextProviderNonNull,
+};

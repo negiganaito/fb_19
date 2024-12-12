@@ -119,7 +119,7 @@
     "react-refresh": "^0.14.2",
     "react-relay": "16.1.0",
     "react-router-dom": "6.23.1",
-    "react-strict-dom": "0.0.11",
+    "react-strict-dom": "0.0.29",
     "relay-compiler": "16.1.0",
     "relay-runtime": "16.1.0",
     "resize-observer-polyfill": "1.5.1",

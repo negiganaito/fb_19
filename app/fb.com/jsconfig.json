@@ -11,7 +11,8 @@
       "@fb-error/*": ["./src/error/*"],
       "@fb-placeholder/*": ["./src/placeholder/*"],
       "@fb-hooks/*": ["./src/hooks/*"],
-      "@fb-layout/*": ["./src/layout/*"]
+      "@fb-layout/*": ["./src/layout/*"],
+      "@fb-text/*": ["./src/text/*"]
     }
   }
 }

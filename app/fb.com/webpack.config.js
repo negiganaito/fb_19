@@ -10,7 +10,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const { ESBuildMinifyPlugin } = require("esbuild-loader");
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const rsdPlugin = require('react-strict-dom/babel');
+// const rsdPlugin = require('react-strict-dom/babel');
 const StylexPlugin = require('@stylexjs/webpack-plugin');
 
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -48,6 +48,7 @@ module.exports = (env, { mode }) => {
         '@fb-placeholder': path.resolve(__dirname, 'src/placeholder'),
         '@fb-hooks': path.resolve(__dirname, 'src/hooks'),
         '@fb-layout': path.resolve(__dirname, 'src/layout'),
+        '@fb-text': path.resolve(__dirname, 'src/text'),
       },
 
       fallback: {
@@ -61,17 +62,17 @@ module.exports = (env, { mode }) => {
     },
 
     output: {
-      // publicPath: '/',
-      // path: path.resolve(__dirname, 'build'),
-      // filename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
-      // chunkFilename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      publicPath: '/',
+      path: path.resolve(__dirname, 'build'),
+      filename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      chunkFilename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
 
       // chatgpt
-      path: path.resolve(__dirname, 'build'),
-      filename: 'js/[name].[contenthash].js',
-      chunkFilename: 'js/[name].[contenthash].js',
-      assetModuleFilename: 'assets/[hash][ext][query]', // Manage static assets
-      publicPath: '/',
+      // path: path.resolve(__dirname, 'build'),
+      // filename: 'js/[name].[contenthash].js',
+      // chunkFilename: 'js/[name].[contenthash].js',
+      // assetModuleFilename: 'assets/[hash][ext][query]', // Manage static assets
+      // publicPath: '/',
     },
 
     module: {
@@ -254,13 +255,13 @@ module.exports = (env, { mode }) => {
       new CopyPlugin({
         patterns: [{ from: './src/assets', to: '' }],
       }),
-      rsdPlugin,
+      // rsdPlugin,
       // Ensure that the stylex plugin is used before Babel
       new StylexPlugin({
         filename: 'styles.[contenthash].css',
         // get webpack mode and set value for dev
         dev: mode === 'development',
-        importSources: ['@stylexjs/stylex', { from: 'react-strict-dom', as: 'css' }],
+        // importSources: ['@stylexjs/stylex', { from: 'react-strict-dom', as: 'css' }],
         // Use statically generated CSS files and not runtime injected CSS.
         // Even in development.
         runtimeInjection: false,
@@ -294,63 +295,63 @@ module.exports = (env, { mode }) => {
       .filter(Boolean),
 
     optimization: {
-      // minimize: isProduction,
-      // mergeDuplicateChunks: true,
-      // removeEmptyChunks: true,
-      // sideEffects: false,
-      // minimizer: [
-      //   // new ESBuildMinifyPlugin({
-      //   //   target: "es2015",
-      //   // }),
-      //   new TerserPlugin({
-      //     extractComments: false,
-      //   }),
-      // ],
-      // splitChunks: {
-      //   chunks: 'all',
-      //   cacheGroups: {
-      //     vendors: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       chunks: 'all',
-      //       enforce: true,
-      //       name: (module) => {
-      //         const [, match] = module.context.match(
-      //           /[\\/]node_modules[\\/](.*?)([\\/]([^\\/]*)([\\/]([^\\/]*))?([\\/]([^\\/]*))?|$)/,
-      //         );
-
-      //         return `vendors/${match.replace('@', '')}`;
-      //       },
-      //     },
-      //   },
-      // },
-
-      // chatgpt
       minimize: isProduction,
-      runtimeChunk: 'single', // Separate runtime code
+      mergeDuplicateChunks: true,
+      removeEmptyChunks: true,
+      sideEffects: false,
+      minimizer: [
+        // new ESBuildMinifyPlugin({
+        //   target: "es2015",
+        // }),
+        new TerserPlugin({
+          extractComments: false,
+        }),
+      ],
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
-          defaultVendors: {
+          vendors: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
             chunks: 'all',
-            priority: -10,
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true,
+            enforce: true,
+            name: (module) => {
+              const [, match] = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]([^\\/]*)([\\/]([^\\/]*))?([\\/]([^\\/]*))?|$)/,
+              );
+
+              return `vendors/${match.replace('@', '')}`;
+            },
           },
         },
       },
-      minimizer: [
-        new TerserPlugin({
-          extractComments: false,
-          terserOptions: {
-            compress: { drop_console: isProduction }, // Remove `console.log` in production
-          },
-        }),
-      ],
+
+      // chatgpt
+      // minimize: isProduction,
+      // runtimeChunk: 'single', // Separate runtime code
+      // splitChunks: {
+      //   chunks: 'all',
+      //   cacheGroups: {
+      //     defaultVendors: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       name: 'vendors',
+      //       chunks: 'all',
+      //       priority: -10,
+      //     },
+      //     default: {
+      //       minChunks: 2,
+      //       priority: -20,
+      //       reuseExistingChunk: true,
+      //     },
+      //   },
+      // },
+      // minimizer: [
+      //   new TerserPlugin({
+      //     extractComments: false,
+      //     terserOptions: {
+      //       compress: { drop_console: isProduction }, // Remove `console.log` in production
+      //     },
+      //   }),
+      // ],
     },
 
     performance: {

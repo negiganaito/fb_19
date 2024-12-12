@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-undef
 const styleXPlugin = require('@stylexjs/babel-plugin');
+const reactStrictPreset = require('react-strict-dom/babel-preset');
 
-// eslint-disable-next-line no-undef
 const path = require('path');
 
 // const ReactCompilerConfig = {
@@ -10,33 +9,45 @@ const path = require('path');
 //   },
 // };
 
+function getPlatform(caller) {
+  return caller && caller.platform;
+}
+
 module.exports = (api) => {
   api.cache.using(() => process.env.NODE_ENV);
   const isDevelopment = api.env('development');
 
-  console.log({ isDevelopment });
+  const platform = api.caller(getPlatform);
+
+  const presets = [];
+
+  if (platform === 'web') {
+    presets.push([reactStrictPreset, { debug: true, dev: isDevelopment, rootDir: __dirname }]);
+  }
+
+  presets.push(
+    [
+      '@babel/preset-env',
+      // {
+      //   targets: {
+      //     browsers: [">0.25%", "not ie 11", "not op_mini all"],
+      //   },
+      //   // useBuiltIns: "usage",
+      //   corejs: 3,
+      //   debug: false,
+      // },
+    ],
+    [
+      '@babel/preset-react',
+      {
+        development: isDevelopment,
+      },
+    ],
+    '@babel/preset-typescript',
+  );
 
   return {
-    presets: [
-      [
-        '@babel/preset-env',
-        // {
-        //   targets: {
-        //     browsers: [">0.25%", "not ie 11", "not op_mini all"],
-        //   },
-        //   // useBuiltIns: "usage",
-        //   corejs: 3,
-        //   debug: false,
-        // },
-      ],
-      [
-        '@babel/preset-react',
-        {
-          development: isDevelopment,
-        },
-      ],
-      '@babel/preset-typescript',
-    ],
+    presets,
 
     plugins: [
       [
@@ -62,7 +73,6 @@ module.exports = (api) => {
       [
         'babel-plugin-fbt',
         {
-          // eslint-disable-next-line no-undef
           fbtCommonPath: path.join(__dirname, 'i18n/fbt/common_strings.json'),
         },
       ],
