@@ -103,7 +103,7 @@ importers:
         version: 15.13.0
       react:
         specifier: git://github.com/tienlx97/react-experimental.git#www19
-        version: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+        version: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       react-dom:
         specifier: git://github.com/tienlx97/react-dom-experimental.git#www19
         version: github.com/tienlx97/react-dom-experimental/c17aa7dc678fe8cfe4fe18ec2dc310ee9fa8865d(react@19.0.0)
@@ -239,7 +239,7 @@ importers:
         version: 15.13.0
       react:
         specifier: git://github.com/tienlx97/react-experimental.git#www19
-        version: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+        version: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       react-dom:
         specifier: git://github.com/tienlx97/react-dom-experimental.git#www19
         version: github.com/tienlx97/react-dom-experimental/c17aa7dc678fe8cfe4fe18ec2dc310ee9fa8865d(react@19.0.0)
@@ -398,8 +398,8 @@ importers:
         specifier: 6.23.1
         version: 6.23.1(react-dom@19.0.0-rc-7aa5dda3-20241114)(react@19.0.0)
       react-strict-dom:
-        specifier: 0.0.11
-        version: 0.0.11(react-dom@19.0.0-rc-7aa5dda3-20241114)(react-native@0.75.4)(react@19.0.0)
+        specifier: 0.0.29
+        version: 0.0.29(react-dom@19.0.0-rc-7aa5dda3-20241114)(react-native@0.75.4)(react@19.0.0)
       relay-compiler:
         specifier: 16.1.0
         version: 16.1.0
@@ -4988,7 +4988,7 @@ packages:
       '@types/react': 19.0.1
       invariant: 2.2.4
       nullthrows: 1.1.1
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       react-native: 0.75.4(@babel/core@7.23.5)(@babel/preset-env@7.20.2)(@types/react@19.0.1)(react@19.0.0)(typescript@5.6.3)
     dev: true
 
@@ -5065,20 +5065,20 @@ packages:
     dependencies:
       postcss-value-parser: 4.2.0
 
-  /@stylexjs/stylex@0.6.0:
-    resolution: {integrity: sha512-8PUoEKvalcm5eXEy7P1OEV3e9E39nguZgZQkjSLp6aMG9bDOuZ0cfdj09I6DQTyWA+Hk7r9sJd4Nk3iRCMdJaQ==}
-    dependencies:
-      css-mediaquery: 0.1.2
-      invariant: 2.2.4
-      styleq: 0.1.3
-    dev: true
-
   /@stylexjs/stylex@0.6.1:
     resolution: {integrity: sha512-1dKZG4VA8qxNf8LqiDWM0JL2YIFpLlblRivv0fabpc+PY02FqwOMdKRWscNCZy2dHGrUOGjjUvkPIU/doAqGzg==}
     dependencies:
       css-mediaquery: 0.1.2
       invariant: 2.2.4
       styleq: 0.1.3
+
+  /@stylexjs/stylex@0.7.5:
+    resolution: {integrity: sha512-e4bryU2AoKBeAlloea7sJZrYrjiqJYViw8AWL6eanTVdk7qJ0CduNoiRQxtCP1dOhqGAPG74kaWT7slLzZnqKg==}
+    dependencies:
+      css-mediaquery: 0.1.2
+      invariant: 2.2.4
+      styleq: 0.1.3
+    dev: true
 
   /@stylexjs/webpack-plugin@0.6.1(webpack@5.76.0):
     resolution: {integrity: sha512-2DCLb4CN/CIfJ9HiZm6qii5STRAmzTBMlezcRP70We1S5RpqfRwKawZsTH8FxIZfTJGTckwQhtyBofuuEmFpcg==}
@@ -9485,7 +9485,7 @@ packages:
       babel-plugin-fbt: 1.0.0(@fbtjs/default-collection-transform@1.0.0)
       babel-plugin-fbt-runtime: 1.0.0(babel-plugin-fbt@1.0.0)
       invariant: 2.2.4
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
     dev: true
 
   /figures@2.0.0:
@@ -13619,7 +13619,7 @@ packages:
       react: '*'
     dependencies:
       prop-types: 15.8.1
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
     dev: false
 
   /react-native@0.75.4(@babel/core@7.23.5)(@babel/preset-env@7.20.2)(@types/react@19.0.1)(react@19.0.0)(typescript@5.6.3):
@@ -13664,7 +13664,7 @@ packages:
       nullthrows: 1.1.1
       pretty-format: 26.6.2
       promise: 8.3.0
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       react-devtools-core: 5.3.2
       react-refresh: 0.14.2
       regenerator-runtime: 0.13.11
@@ -13698,7 +13698,7 @@ packages:
       fbjs: 3.0.5
       invariant: 2.2.4
       nullthrows: 1.1.1
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       relay-runtime: 16.1.0
     transitivePeerDependencies:
       - encoding
@@ -13712,7 +13712,7 @@ packages:
       react-dom: '>=16.8'
     dependencies:
       '@remix-run/router': 1.16.1
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       react-dom: github.com/tienlx97/react-dom-experimental/c17aa7dc678fe8cfe4fe18ec2dc310ee9fa8865d(react@19.0.0)
       react-router: 6.23.1(react@19.0.0)
     dev: true
@@ -13724,21 +13724,21 @@ packages:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.16.1
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
     dev: true
 
-  /react-strict-dom@0.0.11(react-dom@19.0.0-rc-7aa5dda3-20241114)(react-native@0.75.4)(react@19.0.0):
-    resolution: {integrity: sha512-P8F3dNyQRtN658PZcg3lDcwSrdmiofXlfVJkxWMAvy4EH9P/UBihX1R9QpGJADvKjwNASaIdiUqB1nD22/8Rgg==}
-    engines: {node: '>=18.0.0'}
+  /react-strict-dom@0.0.29(react-dom@19.0.0-rc-7aa5dda3-20241114)(react-native@0.75.4)(react@19.0.0):
+    resolution: {integrity: sha512-TL/mzAmqgwrQzIwyg8AslcQZIeUAdVzCm6hDrK4X/ShE9QyGVoZEKYCQmbf5TIrxjLyIA+pdvXQRMDgnN73ERA==}
+    engines: {node: '>=20.11.0'}
     peerDependencies:
-      react: '>=18.2.0'
-      react-dom: '>=18.2.0'
-      react-native: '>=0.71.0'
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-native: '>=0.75.2'
     dependencies:
-      '@stylexjs/stylex': 0.6.0
+      '@stylexjs/stylex': 0.7.5
       css-mediaquery: 0.1.2
       postcss-value-parser: 4.2.0
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       react-dom: github.com/tienlx97/react-dom-experimental/c17aa7dc678fe8cfe4fe18ec2dc310ee9fa8865d(react@19.0.0)
       react-native: 0.75.4(@babel/core@7.23.5)(@babel/preset-env@7.20.2)(@types/react@19.0.1)(react@19.0.0)(typescript@5.6.3)
     dev: true
@@ -16686,11 +16686,11 @@ packages:
     peerDependencies:
       react: git://github.com/tienlx97/react-experimental.git#www19
     dependencies:
-      react: github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c
+      react: github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca
       scheduler: 0.25.0
 
-  github.com/tienlx97/react-experimental/8bffb870f184e52455602532801040cbbf029b2c:
-    resolution: {tarball: https://codeload.github.com/tienlx97/react-experimental/tar.gz/8bffb870f184e52455602532801040cbbf029b2c}
+  github.com/tienlx97/react-experimental/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca:
+    resolution: {tarball: https://codeload.github.com/tienlx97/react-experimental/tar.gz/893b7c411edb7b49666a5105d0bd1aa4e8a3ebca}
     name: react
     version: 19.0.0
     engines: {node: '>=0.10.0'}
