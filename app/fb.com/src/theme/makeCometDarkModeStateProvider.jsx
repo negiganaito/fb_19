@@ -1,10 +1,12 @@
-import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { BaseThemeConfigContext } from '@fb-contexts/BaseThemeConfigContext';
 import { BaseThemeDisplayModeContext } from '@fb-contexts/BaseThemeDisplayModeContext';
 import { CometDarkModeContext } from '@fb-contexts/CometDarkModeContext';
 import { DSPDisplayModeContext } from '@fb-contexts/DSPDisplayModeContext';
 import { UseCometSetDarkModeMetaContent } from '@fb-hooks/useCometSetDarkModeMetaContent';
+import { useGlobalKeyCommands } from '@fb-hooks/useGlobalKeyCommands';
 import { UseSystemPrefersDarkMode } from '@fb-hooks/useSystemPrefersDarkMode';
+import { cometGetKeyCommandConfig } from '@fb-keyboard/cometGetKeyCommandConfig';
 import { gkx } from '@fb-utils/gkx';
 
 import { CometDarkModeRootClass } from './CometDarkModeRootClass';
@@ -80,22 +82,17 @@ export const makeCometDarkModeStateProvider = (props) => {
       //   });
       // });
 
+      // TODO
       // cometPushToast.cometPushToast({
       //   message,
       // });
     };
 
-    // let globalKeyCommands;
+    const globalKeyCommands = !gkx[22802]
+      ? []
+      : [cometGetKeyCommandConfig.getCometKeyCommandConfig('global', 'toggleDarkMode', handleDarkModeToggle)];
 
-    // if (!gkx[22802]) {
-    //   globalKeyCommands = [];
-    // } else {
-    //   globalKeyCommands = [
-    //     cometGetKeyCommandConfig.getCometKeyCommandConfig('global', 'toggleDarkMode', handleDarkModeToggle),
-    //   ];
-    // }
-
-    // useGlobalKeyCommands(globalKeyCommands);
+    useGlobalKeyCommands(globalKeyCommands);
 
     return (
       <BaseThemeConfigContext.Provider value={defaultClass}>

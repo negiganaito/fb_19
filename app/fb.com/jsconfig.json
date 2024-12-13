@@ -13,7 +13,10 @@
       "@fb-hooks/*": ["./src/hooks/*"],
       "@fb-layout/*": ["./src/layout/*"],
       "@fb-text/*": ["./src/text/*"],
-      "@fb-theme/*": ["./src/theme/*"]
+      "@fb-theme/*": ["./src/theme/*"],
+      "@fb-keyboard/*": ["./src/keyboard/*"],
+      "@fb-dump/*": ["./src/dump/*"],
+      "@fb-platform/*": ["./src/platform/*"]
     }
   }
 }

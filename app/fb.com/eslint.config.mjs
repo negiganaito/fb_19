@@ -73,6 +73,9 @@ export default [
             ['@fb-layout', './src/layout'],
             ['@fb-text', './src/text'],
             ['@fb-theme', './src/theme'],
+            ['@fb-keyboard', './src/keyboard'],
+            ['@fb-dump', './src/dump'],
+            ['@fb-platform', './src/platform'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },

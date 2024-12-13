@@ -1,9 +1,8 @@
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
 import { CometDarkMode } from '@fb-theme/CometDarkMode';
 import { CometStyleXSheet } from '@fb-theme/CometStyleXSheet';
 
-import { router } from './routes/router';
+import { App } from './app';
 
 import './css/app.css';
 
@@ -14,5 +13,5 @@ if (!rootElement.innerHTML) {
   CometStyleXSheet.rootStyleSheet.injectTheme();
 
   const root = ReactDOM.createRoot(rootElement);
-  root.render(<RouterProvider router={router} />);
+  root.render(<App />);
 }

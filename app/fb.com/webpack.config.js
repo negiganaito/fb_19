@@ -50,6 +50,9 @@ module.exports = (env, { mode }) => {
         '@fb-layout': path.resolve(__dirname, 'src/layout'),
         '@fb-text': path.resolve(__dirname, 'src/text'),
         '@fb-theme': path.resolve(__dirname, 'src/theme'),
+        '@fb-keyboard': path.resolve(__dirname, 'src/keyboard'),
+        '@fb-dump': path.resolve(__dirname, 'src/dump'),
+        '@fb-platform': path.resolve(__dirname, 'src/platform'),
       },
 
       fallback: {
