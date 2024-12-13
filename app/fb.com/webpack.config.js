@@ -49,6 +49,7 @@ module.exports = (env, { mode }) => {
         '@fb-hooks': path.resolve(__dirname, 'src/hooks'),
         '@fb-layout': path.resolve(__dirname, 'src/layout'),
         '@fb-text': path.resolve(__dirname, 'src/text'),
+        '@fb-theme': path.resolve(__dirname, 'src/theme'),
       },
 
       fallback: {
@@ -62,17 +63,17 @@ module.exports = (env, { mode }) => {
     },
 
     output: {
-      publicPath: '/',
-      path: path.resolve(__dirname, 'build'),
-      filename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
-      chunkFilename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      // publicPath: '/',
+      // path: path.resolve(__dirname, 'build'),
+      // filename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+      // chunkFilename: isProduction ? 'js/[name].[chunkhash].js' : 'js/[name].js',
 
       // chatgpt
-      // path: path.resolve(__dirname, 'build'),
-      // filename: 'js/[name].[contenthash].js',
-      // chunkFilename: 'js/[name].[contenthash].js',
-      // assetModuleFilename: 'assets/[hash][ext][query]', // Manage static assets
-      // publicPath: '/',
+      path: path.resolve(__dirname, 'build'),
+      filename: 'js/[name].[contenthash].js',
+      chunkFilename: 'js/[name].[contenthash].js',
+      assetModuleFilename: 'assets/[hash][ext][query]', // Manage static assets
+      publicPath: '/',
     },
 
     module: {
@@ -295,63 +296,63 @@ module.exports = (env, { mode }) => {
       .filter(Boolean),
 
     optimization: {
-      minimize: isProduction,
-      mergeDuplicateChunks: true,
-      removeEmptyChunks: true,
-      sideEffects: false,
-      minimizer: [
-        // new ESBuildMinifyPlugin({
-        //   target: "es2015",
-        // }),
-        new TerserPlugin({
-          extractComments: false,
-        }),
-      ],
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          vendors: {
-            test: /[\\/]node_modules[\\/]/,
-            chunks: 'all',
-            enforce: true,
-            name: (module) => {
-              const [, match] = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]([^\\/]*)([\\/]([^\\/]*))?([\\/]([^\\/]*))?|$)/,
-              );
-
-              return `vendors/${match.replace('@', '')}`;
-            },
-          },
-        },
-      },
-
-      // chatgpt
       // minimize: isProduction,
-      // runtimeChunk: 'single', // Separate runtime code
+      // mergeDuplicateChunks: true,
+      // removeEmptyChunks: true,
+      // sideEffects: false,
+      // minimizer: [
+      //   // new ESBuildMinifyPlugin({
+      //   //   target: "es2015",
+      //   // }),
+      //   new TerserPlugin({
+      //     extractComments: false,
+      //   }),
+      // ],
       // splitChunks: {
       //   chunks: 'all',
       //   cacheGroups: {
-      //     defaultVendors: {
+      //     vendors: {
       //       test: /[\\/]node_modules[\\/]/,
-      //       name: 'vendors',
       //       chunks: 'all',
-      //       priority: -10,
-      //     },
-      //     default: {
-      //       minChunks: 2,
-      //       priority: -20,
-      //       reuseExistingChunk: true,
+      //       enforce: true,
+      //       name: (module) => {
+      //         const [, match] = module.context.match(
+      //           /[\\/]node_modules[\\/](.*?)([\\/]([^\\/]*)([\\/]([^\\/]*))?([\\/]([^\\/]*))?|$)/,
+      //         );
+
+      //         return `vendors/${match.replace('@', '')}`;
+      //       },
       //     },
       //   },
       // },
-      // minimizer: [
-      //   new TerserPlugin({
-      //     extractComments: false,
-      //     terserOptions: {
-      //       compress: { drop_console: isProduction }, // Remove `console.log` in production
-      //     },
-      //   }),
-      // ],
+
+      // chatgpt
+      minimize: isProduction,
+      runtimeChunk: 'single', // Separate runtime code
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+            priority: -10,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      },
+      minimizer: [
+        new TerserPlugin({
+          extractComments: false,
+          terserOptions: {
+            compress: { drop_console: isProduction }, // Remove `console.log` in production
+          },
+        }),
+      ],
     },
 
     performance: {
@@ -381,9 +382,14 @@ module.exports = (env, { mode }) => {
       //   directory: path.join(__dirname, 'build'),
       // },
 
+      devMiddleware: {
+        publicPath: `http://localhost:${envv.PORT}/`,
+        writeToDisk: true,
+      },
+
       port: envv.PORT || 3000,
       hot: true,
-      open: true,
+      // open: true,
       historyApiFallback: true,
       static: {
         directory: path.resolve(__dirname, 'build'),

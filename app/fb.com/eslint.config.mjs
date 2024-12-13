@@ -72,6 +72,7 @@ export default [
             ['@fb-hooks', './src/hooks'],
             ['@fb-layout', './src/layout'],
             ['@fb-text', './src/text'],
+            ['@fb-theme', './src/theme'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },

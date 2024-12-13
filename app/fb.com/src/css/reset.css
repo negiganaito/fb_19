@@ -3,9 +3,10 @@
   font-style: normal;
   font-weight: 300;
   font-display: fallback;
-  src: url(../../public/font/login/JpNSDuZI5ci.eot);
+  src: url(../../public/font/login/JpNSDuZI5ci.eot );
   src: url(../../public/font/login/JpNSDuZI5ci.eot) format('embedded-opentype'), url(../../public/font/login/U5J5EOguUzh.woff2) format('woff2'), url(../../public/font/login/NQVIJ5tuJmY.woff) format('woff')
 }
+
 
 @font-face {
   font-family: 'Roboto';
