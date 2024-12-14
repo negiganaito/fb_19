@@ -76,6 +76,11 @@ export default [
             ['@fb-keyboard', './src/keyboard'],
             ['@fb-dump', './src/dump'],
             ['@fb-platform', './src/platform'],
+            ['@fb-image', './src/image'],
+            ['@fb-toast', './src/toast'],
+            ['@fb-icons', './src/icons'],
+            ['@fb-event-interaction', './src/event-interaction'],
+            ['@fb-focus', './src/focus'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },

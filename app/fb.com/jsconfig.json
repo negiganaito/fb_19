@@ -16,7 +16,12 @@
       "@fb-theme/*": ["./src/theme/*"],
       "@fb-keyboard/*": ["./src/keyboard/*"],
       "@fb-dump/*": ["./src/dump/*"],
-      "@fb-platform/*": ["./src/platform/*"]
+      "@fb-platform/*": ["./src/platform/*"],
+      "@fb-image/*": ["./src/image/*"],
+      "@fb-toast/*": ["./src/toast/*"],
+      "@fb-icons/*": ["./src/icons/*"],
+      "@fb-event-interaction/*": ["./src/event-interaction/*"],
+      "@fb-focus/*": ["./src/focus/*"]
     }
   }
 }

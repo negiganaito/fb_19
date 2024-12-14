@@ -53,6 +53,11 @@ module.exports = (env, { mode }) => {
         '@fb-keyboard': path.resolve(__dirname, 'src/keyboard'),
         '@fb-dump': path.resolve(__dirname, 'src/dump'),
         '@fb-platform': path.resolve(__dirname, 'src/platform'),
+        '@fb-image': path.resolve(__dirname, 'src/image'),
+        '@fb-toast': path.resolve(__dirname, 'src/toast'),
+        '@fb-icons': path.resolve(__dirname, 'src/icons'),
+        '@fb-event-interaction': path.resolve(__dirname, 'src/event-interaction'),
+        '@fb-focus': path.resolve(__dirname, 'src/focus'),
       },
 
       fallback: {
