@@ -81,6 +81,9 @@ export default [
             ['@fb-icons', './src/icons'],
             ['@fb-event-interaction', './src/event-interaction'],
             ['@fb-focus', './src/focus'],
+            ['@fb-pressable', './src/pressable'],
+            ['@fb-link', './src/link'],
+            ['@fb-button', './src/button'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },

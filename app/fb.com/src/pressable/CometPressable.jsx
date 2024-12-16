@@ -1,64 +1,14 @@
 import React, { forwardRef, useCallback, useContext, useRef, useState } from 'react';
+import { BaseButton } from '@fb-button/BaseButton';
 import { CometContainerPressableContext } from '@fb-contexts/CometContainerPressableContext';
+import { BaseLink } from '@fb-link/BaseLink';
 import stylex from '@stylexjs/stylex';
+
+import { CometPressableOverlay } from './CometPressableOverlay';
 
 //  n = c("gkx")("1721477") || c("gkx")("1459")
 // eslint-disable-next-line no-unused-vars
 const n = true;
-
-const styles = stylex.create({
-  defaultCursor: {
-    cursor: 'default',
-  },
-
-  expanding: {
-    display: 'flex',
-  },
-
-  focusRing: {
-    boxShadow: 'var(--focus-ring-shadow-default)',
-    outline: 'var(--focus-ring-outline-forced-colors) none',
-  },
-  focusRingInset: {
-    boxShadow: 'var(--focus-ring-shadow-inset)',
-  },
-
-  hideOutline: {
-    outline: 'none',
-  },
-
-  linkBase: {
-    display: 'inline-block',
-  },
-
-  root: {
-    textDecoration: {
-      default: null,
-      ':hover': 'none',
-    },
-
-    borderRadius: 'inherit',
-    display: 'inline-flex',
-    flexDirection: 'row',
-
-    userSelect: 'none',
-  },
-
-  root_DEPRECATED: {
-    textDecoration: {
-      default: null,
-      ':hover': 'none',
-    },
-    borderRadius: 'inherit',
-    position: 'relative',
-
-    userSelect: 'none',
-  },
-
-  zIndex: {
-    zIndex: 1,
-  },
-});
 
 // eslint-disable-next-line complexity
 export const CometPressable = forwardRef((props, externalRef) => {
@@ -369,4 +319,58 @@ export const CometPressable = forwardRef((props, externalRef) => {
       children={_children}
     />
   );
+});
+
+const styles = stylex.create({
+  defaultCursor: {
+    cursor: 'default',
+  },
+
+  expanding: {
+    display: 'flex',
+  },
+
+  focusRing: {
+    boxShadow: 'var(--focus-ring-shadow-default)',
+    outline: 'var(--focus-ring-outline-forced-colors) none',
+  },
+  focusRingInset: {
+    boxShadow: 'var(--focus-ring-shadow-inset)',
+  },
+
+  hideOutline: {
+    outline: 'none',
+  },
+
+  linkBase: {
+    display: 'inline-block',
+  },
+
+  root: {
+    textDecoration: {
+      default: null,
+      ':hover': 'none',
+    },
+
+    borderRadius: 'inherit',
+    display: 'inline-flex',
+    flexDirection: 'row',
+
+    userSelect: 'none',
+  },
+
+  root_DEPRECATED: {
+    textDecoration: {
+      default: null,
+      ':hover': 'none',
+    },
+    borderRadius: 'inherit',
+    position: 'relative',
+
+    userSelect: 'none',
+  },
+
+  zIndex: {
+    zIndex: 1,
+  },
 });
