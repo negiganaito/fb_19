@@ -7,6 +7,7 @@ import { UseCometSetDarkModeMetaContent } from '@fb-hooks/useCometSetDarkModeMet
 import { useGlobalKeyCommands } from '@fb-hooks/useGlobalKeyCommands';
 import { UseSystemPrefersDarkMode } from '@fb-hooks/useSystemPrefersDarkMode';
 import { cometGetKeyCommandConfig } from '@fb-keyboard/cometGetKeyCommandConfig';
+import { cometPushToast } from '@fb-toast/cometPushToast';
 import { gkx } from '@fb-utils/gkx';
 
 import { CometDarkModeRootClass } from './CometDarkModeRootClass';
@@ -83,9 +84,9 @@ export const makeCometDarkModeStateProvider = (props) => {
       // });
 
       // TODO
-      // cometPushToast.cometPushToast({
-      //   message,
-      // });
+      cometPushToast.cometPushToast({
+        message,
+      });
     };
 
     const globalKeyCommands = !gkx[22802]

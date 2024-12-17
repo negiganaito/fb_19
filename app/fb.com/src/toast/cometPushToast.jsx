@@ -1,5 +1,6 @@
 import React from 'react';
 import { FBNucleusCautionTriangleFilled20 } from '@fb-icons/FBNucleusCautionTriangleFilled20';
+import { FDSIcon } from '@fb-image/FDSIcon';
 
 import { BaseToasterStateManager } from './BaseToasterStateManager';
 import { CometToast } from './CometToast';
@@ -10,6 +11,8 @@ let toast;
 
 function _cometPushToast(props, duration = 2750, externalInstance) {
   const store = externalInstance ?? defaultInstance;
+
+  console.log({ store });
 
   toast = store.push(
     <CometToast

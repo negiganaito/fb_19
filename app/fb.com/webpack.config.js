@@ -61,6 +61,8 @@ module.exports = (env, { mode }) => {
         '@fb-pressable': path.resolve(__dirname, 'src/pressable'),
         '@fb-link': path.resolve(__dirname, 'src/link'),
         '@fb-button': path.resolve(__dirname, 'src/button'),
+        '@fb-network': path.resolve(__dirname, 'src/network'),
+        '@fb-dialog': path.resolve(__dirname, 'src/dialog'),
       },
 
       fallback: {

@@ -1,6 +1,8 @@
 import React, { forwardRef } from 'react';
 import stylex from '@stylexjs/stylex';
 
+import { CometPressable } from './CometPressable';
+
 const styles = stylex.create({
   defaultCursor: {
     cursor: 'default',

@@ -84,7 +84,7 @@ function applyWithGuard(func, context, args, options) {
       };
       ErrorSerializer.aggregateError(sError, e);
       options = ErrorNormalizeUtils.normalizeError(sError);
-      // eslint-disable-next-line no-unused-expressions
+
       sError === null &&
         func &&
         ((options.extra[func.toString().substring(0, 100)] = 'function'),
@@ -93,6 +93,7 @@ function applyWithGuard(func, context, args, options) {
       f && f(sError);
       context && context(options);
       ErrorPubSub.reportNormalizedError(options);
+      // eslint-disable-next-line no-unused-vars
     } catch (handlingError) {}
   } finally {
     ErrorGuardState.popGuard();

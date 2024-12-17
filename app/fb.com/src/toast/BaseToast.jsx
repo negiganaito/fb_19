@@ -2,14 +2,11 @@ import React, { useId } from 'react';
 import { focusScopeQueries } from '@fb-focus/focusScopeQueries';
 import { XPlatReactFocusRegion } from '@fb-focus/XPlatReactFocusRegion';
 import { BaseView } from '@fb-layout/BaseView';
-import { useCurrentDisplayMode } from '@fb-theme/useCurrentDisplayMode';
+import { BaseInlinePressable } from '@fb-pressable/BaseInlinePressable';
 import stylex from '@stylexjs/stylex';
 
-// const config = {
-//   dark: '__fb-dark-mode ',
-//   light: '__fb-light-mode ',
-//   type: 'CLASSNAMES',
-// };
+import { BaseToastContentWrapper } from './BaseToastContentWrapper';
+
 export function BaseToast(props) {
   const {
     action,
@@ -19,12 +16,13 @@ export function BaseToast(props) {
     message,
     onDismiss,
     size = 'full-width',
+    // eslint-disable-next-line no-unused-vars
     testid,
     toastRef,
     useInvertedDisplayMode = true,
   } = props;
 
-  const displayMode = useCurrentDisplayMode() === 'dark' ? 'light' : 'dark';
+  // const displayMode = useCurrentDisplayMode() === 'dark' ? 'light' : 'dark';
 
   const toastMessageId = useId();
   const ariaProps = action
@@ -74,28 +72,12 @@ export function BaseToast(props) {
     <BaseToastContentWrapper
       ref={toastRef}
       testid={undefined}
-      useInvertedDisplayMode={displayMode}
+      useInvertedDisplayMode={useInvertedDisplayMode}
       xstyle={[styles.root, size === 'full-width' && styles.rootFullWidth]}
     >
       {linkWrapperComp}
     </BaseToastContentWrapper>
   );
-
-  // return useInvertedDisplayMode ? (
-  //   <BaseTheme
-  //     config={config}
-  //     displayMode={displayMode}
-  //     ref={toastRef}
-  //     testid={undefined}
-  //     xstyle={[styles.root, size === 'full-width' && styles.rootFullWidth]}
-  //   >
-  //     {linkWrapperComp}
-  //   </BaseTheme>
-  // ) : (
-  //   <BaseView ref={toastRef} testid={undefined} xstyle={[styles.root, size === 'full-width' && styles.rootFullWidth]}>
-  //     {linkWrapperComp}
-  //   </BaseView>
-  // );
 }
 
 const styles = stylex.create({
@@ -134,46 +116,3 @@ const styles = stylex.create({
     width: '100%',
   },
 });
-
-// const Wrapper = jsxs(React.Fragment, {
-//   children: [
-//     addOnStart &&
-//       jsx(BaseView, {
-//         xstyle: styles.item,
-//         children: addOnStart,
-//       }),
-//     jsx(BaseView, {
-//       xstyle: [styles.item, styles.itemText],
-//       ...ariaProps,
-//       children: message({
-//         toastMessageId: toastMessageId,
-//       }),
-//     }),
-//     action &&
-//       jsx(FocusRegion.FocusRegion, {
-//         autoFocusQuery: focusScopeQueries.tabbableScopeQuery,
-//         children: jsx(BaseView, {
-//           "aria-labelledby": toastMessageId,
-//           role: "group",
-//           xstyle: styles.item,
-//           children: action.element
-//             ? action.element
-//             : action.labelRenderer &&
-//               jsx(BaseInlinePressable, {
-//                 onPress: function (a) {
-//                   onDismiss();
-//                   action.onPress(a);
-//                 },
-//                 testid: void 0,
-//                 xstyle: styles.link,
-//                 children: action.labelRenderer(action.label),
-//               }),
-//         }),
-//       }),
-//     closeButton &&
-//       jsx(BaseView, {
-//         xstyle: styles.item,
-//         children: closeButton,
-//       }),
-//   ],
-// });

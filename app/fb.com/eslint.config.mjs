@@ -84,6 +84,8 @@ export default [
             ['@fb-pressable', './src/pressable'],
             ['@fb-link', './src/link'],
             ['@fb-button', './src/button'],
+            ['@fb-network', './src/network'],
+            ['@fb-dialog', './src/dialog'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },
