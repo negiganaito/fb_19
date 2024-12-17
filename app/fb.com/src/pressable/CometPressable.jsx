@@ -294,8 +294,9 @@ export const CometPressable = forwardRef((props, externalRef) => {
         suppressFocusRing
         testid={undefined}
         xstyle={_className}
-        children={_children}
-      />
+      >
+        {_children}
+      </BaseLink>
     );
   }
 
@@ -316,8 +317,9 @@ export const CometPressable = forwardRef((props, externalRef) => {
       suppressFocusRing
       testid={undefined}
       xstyle={_className}
-      children={_children}
-    />
+    >
+      {_children}
+    </BaseButton>
   );
 });
 

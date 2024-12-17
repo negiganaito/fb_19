@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import { ErrorGuard } from '@fb-error/ErrorGuard';
+import { CometNetworkStatusToast } from '@fb-network/CometNetworkStatusToast';
 import { CometDarkMode } from '@fb-theme/CometDarkMode';
 import { CometStyleXSheet } from '@fb-theme/CometStyleXSheet';
-import { CometNetworkStatusToast } from '@fb-toast/CometNetworkStatusToast';
 
 import { App } from './app';
 

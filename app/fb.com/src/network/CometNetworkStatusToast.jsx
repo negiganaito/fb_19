@@ -5,9 +5,8 @@ import { FDSIcon } from '@fb-image/FDSIcon';
 import { ix } from '@fb-image/ix';
 import { SVGIcon } from '@fb-image/SVGIcon';
 import { NetworkStatus } from '@fb-network/NetworkStatus';
-
-import { BaseToasterStateManager } from './BaseToasterStateManager';
-import { cometPushToast } from './cometPushToast';
+import { BaseToasterStateManager } from '@fb-toast/BaseToasterStateManager';
+import { cometPushToast } from '@fb-toast/cometPushToast';
 
 let Component;
 let networkRef = null;

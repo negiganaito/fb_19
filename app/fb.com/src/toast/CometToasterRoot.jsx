@@ -12,6 +12,7 @@ function onError(error) {
   });
 }
 
+// TODO
 const useHideNotificationsToasts = false;
 
 export const CometToasterRoot = (props) => {
