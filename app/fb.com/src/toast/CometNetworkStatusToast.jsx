@@ -43,7 +43,7 @@ const onNetworkChange = ({ online }) => {
 
         message: 'You are currently offline.',
       },
-      4e3, // Infinity,
+      Infinity, // Infinity,
       instance,
     );
   }

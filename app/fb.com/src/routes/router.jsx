@@ -1,11 +1,16 @@
 import React from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { CometLoggedInFBApp } from '@fb-platform/CometLoggedInFBApp';
 
 import { ExamplePage } from './example';
 import { Home } from './home';
 
 const AuthLayout = () => {
-  return <Outlet />;
+  return (
+    <CometLoggedInFBApp>
+      <Outlet />
+    </CometLoggedInFBApp>
+  );
 };
 
 function ProtectedLayout() {

@@ -38,6 +38,11 @@ export const ErrorPubSub = {
     removeFromArray(listeners, a);
   },
 
+  reportError: (a) => {
+    const err = ErrorNormalizeUtils.normalizeError(a);
+    ErrorPubSub.reportNormalizedError(err);
+  },
+
   reportNormalizedError: (nError) => {
     if (flag) {
       return false;
