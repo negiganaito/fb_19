@@ -10,6 +10,7 @@ import { CometPressableOverlay } from './CometPressableOverlay';
 // eslint-disable-next-line no-unused-vars
 const n = true;
 
+// BUG
 // eslint-disable-next-line complexity
 export const CometPressable = forwardRef((props, externalRef) => {
   const {
@@ -104,7 +105,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
   const overlay = overlayDisabled ? undefined : (
     <CometPressableOverlay
       focusRingPosition={overlayFocusRingPosition}
-      focusVisible={!hideFocusOverlay && focusVisibleState}
+      focusVisible={!hideFocusOverlay && (focusVisibleState || overlayFocused)}
       focusVisibleStyle={overlayFocusVisibleStyle}
       hovered={!hideHoverOverlay && hoveredState}
       hoveredStyle={overlayHoveredStyle}
@@ -170,7 +171,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
     expanding && styles.expanding,
     linkProps && styles.linkBase,
     !focusVisibleState && styles.hideOutline,
-    overlayHoveredStyle,
+    // overlayHoveredStyle,
     //
     _classNameWith,
     _suppressFocusRing && (overlayFocusRingPosition === 'inset' ? styles.focusRingInset : styles.focusRing),
