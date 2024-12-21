@@ -38,6 +38,8 @@ export const CometPressableOverlay = (props) => {
     }
   }
 
+  console.log({ state });
+
   // pressed
   //   ? state !== 'pressed' && setState('pressed')
   //   : focusVisible

@@ -2,9 +2,12 @@
 import React, { forwardRef, useContext, useRef } from 'react';
 import { CometGHLRenderingContext } from '@fb-contexts/CometGHLRenderingContext';
 import { useCometTheme } from '@fb-hooks/useCometTheme';
+import { FDSIcon } from '@fb-image/FDSIcon';
 import { FDSText } from '@fb-text/FDSText';
 import { useMergeRefs } from '@fb-utils/useMergeRefs';
 import stylex from '@stylexjs/stylex';
+
+import { BaseStyledButton } from './BaseStyledButton';
 
 const FDSButton = forwardRef((props, ref) => {
   const {
@@ -36,13 +39,14 @@ const FDSButton = forwardRef((props, ref) => {
     ...rest
   } = props;
 
-  const J = type === 'fdsOverride_collaborativePostCTA' ? 'secondary' : type in m ? type : 'primary';
+  const buttonType =
+    type === 'fdsOverride_collaborativePostCTA' ? 'secondary' : type in buttonStyleMap ? type : 'primary';
 
-  let L = disabled ? 'disabled' : reduceEmphasis ? 'deemphasized' : 'default';
+  let buttonState = disabled ? 'disabled' : reduceEmphasis ? 'deemphasized' : 'default';
 
-  let M = m[J][L];
+  let buttonColor = buttonStyleMap[buttonType][buttonState];
 
-  L = n[J][L];
+  const buttonOverlayStateColor = buttonOverlayStyle[buttonType][buttonState];
 
   const internalRef = useRef(null);
 
@@ -52,50 +56,91 @@ const FDSButton = forwardRef((props, ref) => {
   const cometGHLRenderingWithLink = linkProps && ghlRenderingContext;
   const _label = rest['aria-label'] ?? label; // N
 
-  const e = useMergeRefs(internalRef, ref);
+  const _ariaLabel = cometGHLRenderingWithLink ?? _label;
 
-  const N = labelIsHidden ? null : (
-    <FDSText color={M} numberOfLines={1} type={size === 'large' ? 'button1' : 'button2'}>
+  const combineRef = useMergeRefs(internalRef, ref);
+
+  const buttonContent = labelIsHidden ? null : (
+    <FDSText color={buttonColor} numberOfLines={1} type={size === 'large' ? 'button1' : 'button2'}>
       {label}
     </FDSText>
   );
 
-  const b = type === 'overlay' && disabled && l.contentDisabled;
-  const r = type === 'overlay' && themeClassName;
-  const M = size === 'medium' && l.sizeMedium;
-  const O = size === 'large' && l.sizeLarge;
-  const C = icon && labelIsHidden && l.paddingIconOnly;
+  const iconContent = icon && <FDSIcon color={buttonOverlayStateColor} icon={icon} isDecorative size={16} />;
 
-  const o = [b, r, M, O, C];
+  const buttonComp = (
+    <BaseStyledButton
+      {...rest}
+      addOnEnd={addOnSecondary}
+      addOnStart={addOnPrimary}
+      aria-label={_ariaLabel}
+      content={buttonContent}
+      contentXstyle={[
+        type === 'overlay' && disabled && styles.contentDisabled,
+        type === 'overlay' && themeClassName,
+        size === 'medium' && styles.sizeMedium,
+        size === 'large' && styles.sizeLarge,
+        icon && labelIsHidden && styles.paddingIconOnly,
+      ]}
+      disabled={disabled}
+      icon={iconContent}
+      id={id}
+      linkProps={linkProps}
+      onFocusIn={onFocusIn}
+      onFocusOut={onFocusOut}
+      onHoverIn={onHoverIn}
+      onHoverOut={onHoverOut}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      overlayPressedStyle={[
+        styles.primaryOverlayPressed,
+        reduceEmphasis && styles.primaryDeemphasizedOverlayPressed,
+        buttonType === 'secondary' && styles.secondaryOverlayPressed,
+        buttonType === 'secondary' && reduceEmphasis && styles.secondaryDeemphasizedOverlayPressed,
+        buttonType === 'overlay' && styles.overlayOverlayPressed,
+        buttonType === 'overlay' && reduceEmphasis && styles.overlayDeemphasizedOverlayPressed,
+        buttonType === 'dark-overlay' && styles.darkOverlayPressed,
+        buttonType === 'dark-overlay' && reduceEmphasis && styles.overlayDeemphasizedOverlayPressed,
+        styles.fadeOut,
+      ]}
+      padding={padding}
+      ref={combineRef}
+      suppressHydrationWarning={suppressHydrationWarning}
+      testOnly_pressed={testOnly_pressed}
+      testid={undefined}
+      xstyle={[
+        type === 'primary' && styles.primary,
+        type === 'primary' && reduceEmphasis && styles.primaryDeemphasized,
+        type === 'secondary' && styles.secondary,
+        type === 'secondary' && reduceEmphasis && styles.secondaryDeemphasized,
+        type === 'fdsOverride_black' && styles.fdsOverrideBlack,
+        type === 'fdsOverride_negative' && styles.fdsOverrideNegative,
+        type === 'fdsOverride_positive' && styles.fdsOverridePositive,
+        type === 'fdsOverride_collaborativePostCTA' && styles.fdsOverrideCollaborativePostCTA,
+        type === 'overlay' && styles.overlay,
+        type === 'overlay' && reduceEmphasis && styles.overlayDeemphasized,
+        disabled && styles.disabled,
+        type === 'overlay' && disabled && styles.overlayDisabled,
+        type === 'dark-overlay' && styles.darkOverlay,
+      ]}
+    />
+  );
 
-  const b = icon && <FDSIcon color={iconColor} icon={icon} isDecorative size={16} />;
+  const fdsButtonWrapper = type === 'overlay' ? <ThemeWrapper>{buttonComp}</ThemeWrapper> : buttonComp;
 
-  r = reduceEmphasis && l.primaryDeemphasizedOverlayPressed;
-  M = type === 'secondary' && l.secondaryOverlayPressed;
-  O = type === 'secondary' && reduceEmphasis && l.secondaryDeemphasizedOverlayPressed;
-  C = type === 'overlay' && l.overlayOverlayPressed;
-  p = type === 'overlay' && reduceEmphasis && l.overlayDeemphasizedOverlayPressed;
-  L = type === 'dark-overlay' && l.darkOverlayPressed;
-  J = type === 'dark-overlay' && reduceEmphasis && l.overlayDeemphasizedOverlayPressed;
+  // if (tooltip) {
+  //   return (
+  //     <FDSTooltip position={tooltipPosition} tooltip={tooltip}>
+  //       {fdsButtonComp}
+  //     </FDSTooltip>
+  //   );
+  // }
 
-  const R = [l.primaryOverlayPressed, r, M, O, C, p, L, J, l.fadeOut];
-
-  r = I === 'primary' && l.primary;
-  M = I === 'primary' && B && l.primaryDeemphasized;
-  O = I === 'secondary' && l.secondary;
-  C = I === 'secondary' && B && l.secondaryDeemphasized;
-  p = I === 'fdsOverride_black' && l.fdsOverrideBlack;
-  L = I === 'fdsOverride_negative' && l.fdsOverrideNegative;
-  J = I === 'fdsOverride_positive' && l.fdsOverridePositive;
-  let S = I === 'fdsOverride_collaborativePostCTA' && l.fdsOverrideCollaborativePostCTA;
-  let T = I === 'overlay' && l.overlay;
-  B = I === 'overlay' && B && l.overlayDeemphasized;
-  let U = a && l.disabled;
-  let V = I === 'overlay' && a && l.overlayDisabled;
-  let W = I === 'dark-overlay' && l.darkOverlay;
+  return fdsButtonWrapper;
 });
 
-const l = stylex.create({
+const styles = stylex.create({
   contentDisabled: {
     opacity: 0.3,
   },
@@ -180,7 +225,7 @@ const l = stylex.create({
   },
 });
 
-const m = {
+const buttonStyleMap = {
   'dark-overlay': {
     deemphasized: 'white',
     default: 'white',
@@ -203,7 +248,7 @@ const m = {
   },
 };
 
-const n = {
+const buttonOverlayStyle = {
   'dark-overlay': {
     deemphasized: 'white',
     default: 'white',
@@ -225,3 +270,5 @@ const n = {
     disabled: 'disabled',
   },
 };
+
+export { FDSButton };

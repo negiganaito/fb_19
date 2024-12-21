@@ -16,7 +16,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
     allowClickEventPropagation,
     children,
     className_DEPRECATED,
-    cursorDisabled,
+    cursorDisabled = false,
     xstyle,
     disabled = false,
     display,
@@ -48,6 +48,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
     overlayFocusVisibleStyle,
     overlayHoveredStyle,
     overlayPressedStyle,
+    overlayFocused = false,
     overlayRadius,
     overlayXStyle,
     suppressFocusRing = false,
@@ -56,6 +57,8 @@ export const CometPressable = forwardRef((props, externalRef) => {
     testid,
     // eslint-disable-next-line no-unused-vars
     onContextMenu,
+    pressedStyleValue,
+    showDynamicHover,
     ...rest
   } = props;
 
