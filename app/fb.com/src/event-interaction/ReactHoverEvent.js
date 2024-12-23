@@ -60,12 +60,13 @@ const useHover = (target, options) => {
   });
 
   useEffect(() => {
-    const targetElement = target.current;
+    let targetElement = target.current;
     const hoverTouchRefCurrent = hoverTouchRef.current;
 
-    if (targetElement && hoverTouchRefCurrent) {
-      // eslint-disable-next-line react-compiler/react-compiler
-      targetElement._hoverEventTarget = true;
+    const hoverTarget = { _hoverEventTarget: true };
+
+    if (target.current && hoverTouchRefCurrent) {
+      targetElement = { ...targetElement, ...hoverTarget };
 
       const handleMouseOut = function (param) {
         hoverTouchRefCurrent.isHovered &&
@@ -145,26 +146,6 @@ const useHover = (target, options) => {
               pointeroutHandler.setListener(document, handleMouseOut))
             : mouseoutHandler.setListener(document, handleMouseOut));
       };
-
-      /**
-      d('ReactEventHelpers').hasPointerEvents
-              ? pointeroverHandler.setListener(targetCurr, function (a) {
-                  a.pointerType !== 'touch' && i(a)
-                })
-              : (mouseoverHandler.setListener(targetCurr, function (a) {
-                  hoverTouchRefCurr.isTouched || i(a)
-                }),
-                touchstartHandler.setListener(targetCurr, function () {
-                  hoverTouchRefCurr.isTouched = !0
-                }),
-                mousemoveHandler.setListener(doc, x))
-            hoverTouchRefCurr.isHovered &&
-              (d('ReactEventHelpers').hasPointerEvents
-                ? (pointermoveHandler.setListener(doc, x),
-                  pointercancelHandler.setListener(doc, y),
-                  pointeroutHandler.setListener(doc, k))
-                : mouseoutHandler.setListener(doc, k))
-       */
 
       if (ReactEventHelpers.hasPointerEvents) {
         pointeroverHandler.setListener(targetElement, (event) => {

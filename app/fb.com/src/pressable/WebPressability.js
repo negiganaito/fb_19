@@ -1,7 +1,7 @@
+import { ReactFocusEvent } from '@fb-event-interaction/19/ReactFocusEvent';
+import { ReactPressEvent } from '@fb-event-interaction/19/ReactPressEvent';
 import { ReactContextMenuEvent } from '@fb-event-interaction/ReactContextMenuEvent';
-import { ReactFocusEvent } from '@fb-event-interaction/ReactFocusEvent';
 import { ReactHoverEvent } from '@fb-event-interaction/ReactHoverEvent';
-import { ReactPressEvent } from '@fb-event-interaction/ReactPressEvent';
 
 function usePressability(targetRef, options) {
   const {
@@ -38,27 +38,27 @@ function usePressability(targetRef, options) {
   //   onHoverStart,
   // });
 
-  ReactPressEvent.usePress(targetRef, {
-    disabled,
-    onPressChange,
-    onPressEnd,
-    onPressMove,
-    onPressStart,
-  });
+  // ReactPressEvent.usePress(targetRef, {
+  //   disabled,
+  //   onPressChange,
+  //   onPressEnd,
+  //   onPressMove,
+  //   onPressStart,
+  // });
 
-  ReactFocusEvent.useFocus(targetRef, {
-    disabled,
-    onBlur,
-    onFocus,
-    onFocusChange,
-    onFocusVisibleChange,
-  });
+  // ReactFocusEvent.useFocus(targetRef, {
+  //   disabled,
+  //   onBlur,
+  //   onFocus,
+  //   onFocusChange,
+  //   onFocusVisibleChange,
+  // });
 
-  ReactContextMenuEvent.useContextMenu(targetRef, {
-    disabled,
-    onContextMenu,
-    preventDefault: preventContextMenu || false,
-  });
+  // ReactContextMenuEvent.useContextMenu(targetRef, {
+  //   disabled,
+  //   onContextMenu,
+  //   preventDefault: preventContextMenu || false,
+  // });
 }
 
 export const WebPressability = {

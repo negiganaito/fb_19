@@ -1,7 +1,11 @@
-import React, { forwardRef, useCallback, useContext, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { BaseButton } from '@fb-button/BaseButton';
+import { BasePlaceholderContext } from '@fb-contexts/BasePlaceholderContext';
 import { CometContainerPressableContext } from '@fb-contexts/CometContainerPressableContext';
+import { CometDangerouslySuppressInteractiveElementsContext } from '@fb-contexts/CometDangerouslySuppressInteractiveElementsContext';
+import { ReactFocusEvent } from '@fb-event-interaction/ReactFocusEvent';
 import { BaseLink } from '@fb-link/BaseLink';
+import { useMergeRefs } from '@fb-utils/useMergeRefs';
 import stylex from '@stylexjs/stylex';
 
 import { CometPressableOverlay } from './CometPressableOverlay';
@@ -24,23 +28,23 @@ export const CometPressable = forwardRef((props, externalRef) => {
     expanding,
     hideFocusOverlay = false,
     hideHoverOverlay = false,
-    // eslint-disable-next-line no-unused-vars
+
     isContainerTarget = false,
     linkProps,
     onFocusChange,
     onFocusVisibleChange,
     onFocusIn,
-    onFocusOut,
+    onFocusOut, // A
 
     onHoverChange,
     onHoverIn,
     onHoverMove,
-    onPressOut,
+    onHoverOut,
 
-    onPress,
+    onPress, // da
     onPressChange,
     onPressIn,
-    onHoverOut,
+    onPressOut,
 
     preventContextMenu,
     overlayDisabled = false,
@@ -56,20 +60,28 @@ export const CometPressable = forwardRef((props, externalRef) => {
     testOnly_pressed = false,
     // eslint-disable-next-line no-unused-vars
     testid,
-    // eslint-disable-next-line no-unused-vars
-    onContextMenu,
+
     pressedStyleValue,
+    style,
+    // eslint-disable-next-line no-unused-vars
     showDynamicHover,
     ...rest
   } = props;
 
-  const _display = !expanding ? 'block' : display;
+  // const _display = !expanding ? 'block' : display;
 
+  const _expanding = !expanding ? display === 'block' : expanding;
+
+  // S ha
   const [pressedState, setPressed] = useState(testOnly_pressed);
+  // T ia
   const [focusedState, setFocused] = useState(false);
+  // U ja
   const [focusVisibleState, setFocusVisible] = useState(false);
+  // V ka
   const [hoveredState, setHovered] = useState(false);
 
+  // R
   const onPressChangeCb = useCallback(
     (e) => {
       setPressed(e || testOnly_pressed);
@@ -78,6 +90,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
     [onPressChange, testOnly_pressed],
   );
 
+  // W
   const onFocusChangeCb = useCallback(
     (e) => {
       setFocused(e);
@@ -86,6 +99,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
     [onFocusChange],
   );
 
+  // X
   const onFocusVisibleChangeCb = useCallback(
     (e) => {
       setFocusVisible(e);
@@ -94,6 +108,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
     [onFocusVisibleChange],
   );
 
+  // la
   const onHoverChangeCb = useCallback(
     (e) => {
       setHovered(e);
@@ -159,16 +174,16 @@ export const CometPressable = forwardRef((props, externalRef) => {
 
   const cometContainerPressableContextValue = useContext(CometContainerPressableContext);
 
-  // const cometDangerouslySuppressInteractiveElementsContextValue = useContext(
-  //   CometDangerouslySuppressInteractiveElementsContext,
-  // );
+  const cometDangerouslySuppressInteractiveElementsContextValue = useContext(
+    CometDangerouslySuppressInteractiveElementsContext,
+  );
 
   const _suppressFocusRing = focusVisibleState && (hideFocusOverlay || overlayDisabled) && !suppressFocusRing;
 
   const _className = [
-    _display === 'inline' ? styles.root_DEPRECATED : styles.root,
+    display === 'inline' ? styles.root_DEPRECATED : styles.root,
     cursorDisabled === true && styles.defaultCursor,
-    expanding && styles.expanding,
+    _expanding && styles.expanding,
     linkProps && styles.linkBase,
     !focusVisibleState && styles.hideOutline,
     // overlayHoveredStyle,
@@ -178,22 +193,28 @@ export const CometPressable = forwardRef((props, externalRef) => {
     cometContainerPressableContextValue !== undefined && styles.zIndex,
   ];
 
-  // const _className = mergeClasses(
-  //   _display === 'inline' ? classes.root_DEPRECATED : classes.root,
-  //   cursorDisabled === true && classes.defaultCursor,
-  //   expanding && classes.expanding,
-  //   linkProps !== undefined && classes.linkBase,
-  //   !focusVisibleState && classes.hideOutline,
-  //   overlayHoveredStyle,
-  //   //
-  //   _classNameWith,
-  //   _suppressFocusRing &&
-  //     (overlayFocusRingPosition === 'inset'
-  //       ? classes.focusRingInsetXStyle
-  //       : classes.focusRingXStyle),
-  //   cometContainerPressableContextValue !== undefined && classes.zIndex
-  // );
+  let pressedStyle = {};
 
+  if (pressedState && pressedStyleValue) {
+    const { opacity: opacityValue, scale: scaleValue } = pressedStyleValue;
+
+    // N = pressedStyleValue.opacity;
+    // f = pressedStyleValue.scale;
+
+    if (opacityValue) {
+      pressedStyle = {
+        opacity: opacityValue,
+      };
+    }
+
+    if (scaleValue) {
+      pressedStyle = { ...pressedStyle, transform: 'scale(' + scaleValue + ')' };
+    }
+  }
+
+  const mergedStyle = { ...style, ...pressedStyle };
+
+  // T
   const _props = {
     onBlur: onFocusOut,
     onClick: onPress,
@@ -209,10 +230,121 @@ export const CometPressable = forwardRef((props, externalRef) => {
     onPressStart: onPressIn,
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const ga = useRef(null);
-  // eslint-disable-next-line no-unused-vars
-  const internalRef = useRef(null);
+  const ma = useRef(null);
+  const Z = useRef(null);
+
+  useEffect(() => {
+    if (isContainerTarget && cometContainerPressableContextValue) {
+      cometContainerPressableContextValue.onMount(
+        {
+          onContextMenu: (e) => {
+            preventContextMenu === true && e.preventDefault();
+            rest.onContextMenu && rest.onContextMenu(e);
+          },
+          onPress: () => {
+            Z.current && Z.current.click();
+          },
+          target: !linkProps ? undefined : linkProps.target,
+          url: !linkProps ? undefined : linkProps.url,
+        },
+        ma,
+      );
+    }
+  }, [
+    cometContainerPressableContextValue,
+    isContainerTarget,
+    testOnly_pressed,
+    rest.onContextMenu,
+    preventContextMenu,
+    !linkProps ? undefined : linkProps.url,
+    !linkProps ? undefined : linkProps.target,
+  ]);
+
+  useEffect(() => {
+    const a = Z.current;
+
+    if (!a) {
+      return;
+    }
+
+    if (a === document.activeElement) {
+      onFocusChangeCb(true);
+      ReactFocusEvent.getGlobalFocusVisible() && onFocusVisibleChangeCb(!0);
+    }
+  }, [onFocusChangeCb, onFocusVisibleChangeCb]);
+
+  const V = useMergeRefs(externalRef, Z);
+
+  const q = useContext(BasePlaceholderContext);
+
+  if (cometDangerouslySuppressInteractiveElementsContextValue) {
+    const SpanOrDivComp = display === 'inline' ? 'span' : 'div';
+
+    return (
+      <SpanOrDivComp
+        className_DEPRECATED={className_DEPRECATED}
+        display={display === 'inline' ? display : 'block'}
+        preventContextMenu={preventContextMenu}
+        {...rest}
+        className={stylex(_className)}
+        data-testid={undefined}
+        ref={V}
+        style={mergedStyle}
+      >
+        {_children}
+      </SpanOrDivComp>
+    );
+  }
+
+  if (linkProps) {
+    const { url, ...restLinkProps } = linkProps;
+
+    const baseLinkProps = { ...restLinkProps, href: url };
+
+    return (
+      <BaseLink
+        {..._props}
+        // onContextMenu={onContextMenu}
+        {...rest}
+        {...baseLinkProps}
+        className_DEPRECATED={className_DEPRECATED}
+        disabled={disabled}
+        display={display === 'inline' ? display : 'block'}
+        preventContextMenu={preventContextMenu}
+        // BUG
+        // ref={ref}
+        ref={V}
+        style={mergedStyle}
+        // suppressFocusRing={!_suppressFocusRing || n}
+        suppressFocusRing
+        testid={undefined}
+        xstyle={_className}
+      >
+        {_children}
+      </BaseLink>
+    );
+  }
+
+  return (
+    <BaseButton
+      {..._props}
+      {...rest}
+      allowClickEventPropagation={allowClickEventPropagation}
+      className_DEPRECATED={className_DEPRECATED}
+      disabled={disabled}
+      display={display === 'inline' ? display : 'block'}
+      preventContextMenu={preventContextMenu}
+      // BUG
+      // ref={ref}
+      ref={V}
+      style={mergedStyle}
+      suppressFocusRing
+      testid={undefined}
+      xstyle={_className}
+    >
+      {_children}
+    </BaseButton>
+  );
 
   // useEffect(
   //   () => {
@@ -276,55 +408,55 @@ export const CometPressable = forwardRef((props, externalRef) => {
   //   )
   // }
 
-  if (linkProps) {
-    const { url, ...restLinkProps } = linkProps;
+  // if (linkProps) {
+  //   const { url, ...restLinkProps } = linkProps;
 
-    const baseLinkProps = { ...restLinkProps, href: url };
+  //   const baseLinkProps = { ...restLinkProps, href: url };
 
-    return (
-      <BaseLink
-        {..._props}
-        // onContextMenu={onContextMenu}
-        {...rest}
-        {...baseLinkProps}
-        className_DEPRECATED={className_DEPRECATED}
-        disabled={disabled}
-        display={_display === 'inline' ? _display : 'block'}
-        preventContextMenu={preventContextMenu}
-        // BUG
-        // ref={ref}
-        ref={externalRef}
-        // suppressFocusRing={!_suppressFocusRing || n}
-        suppressFocusRing
-        testid={undefined}
-        xstyle={_className}
-      >
-        {_children}
-      </BaseLink>
-    );
-  }
+  //   return (
+  //     <BaseLink
+  //       {..._props}
+  //       // onContextMenu={onContextMenu}
+  //       {...rest}
+  //       {...baseLinkProps}
+  //       className_DEPRECATED={className_DEPRECATED}
+  //       disabled={disabled}
+  //       display={_display === 'inline' ? _display : 'block'}
+  //       preventContextMenu={preventContextMenu}
+  //       // BUG
+  //       // ref={ref}
+  //       ref={externalRef}
+  //       // suppressFocusRing={!_suppressFocusRing || n}
+  //       suppressFocusRing
+  //       testid={undefined}
+  //       xstyle={_className}
+  //     >
+  //       {_children}
+  //     </BaseLink>
+  //   );
+  // }
 
-  return (
-    <BaseButton
-      {..._props}
-      {...rest}
-      allowClickEventPropagation={allowClickEventPropagation}
-      className_DEPRECATED={className_DEPRECATED}
-      disabled={disabled}
-      display={_display === 'inline' ? _display : 'block'}
-      preventContextMenu={preventContextMenu}
-      // BUG
-      // ref={ref}
-      ref={externalRef}
-      // ref={ref}
-      // suppressFocusRing={!_suppressFocusRing || n}
-      suppressFocusRing
-      testid={undefined}
-      xstyle={_className}
-    >
-      {_children}
-    </BaseButton>
-  );
+  // return (
+  //   <BaseButton
+  //     {..._props}
+  //     {...rest}
+  //     allowClickEventPropagation={allowClickEventPropagation}
+  //     className_DEPRECATED={className_DEPRECATED}
+  //     disabled={disabled}
+  //     display={_display === 'inline' ? _display : 'block'}
+  //     preventContextMenu={preventContextMenu}
+  //     // BUG
+  //     // ref={ref}
+  //     ref={externalRef}
+  //     // ref={ref}
+  //     // suppressFocusRing={!_suppressFocusRing || n}
+  //     suppressFocusRing
+  //     testid={undefined}
+  //     xstyle={_className}
+  //   >
+  //     {_children}
+  //   </BaseButton>
+  // );
 });
 
 const styles = stylex.create({
@@ -338,7 +470,11 @@ const styles = stylex.create({
 
   focusRing: {
     boxShadow: 'var(--focus-ring-shadow-default)',
-    outline: 'var(--focus-ring-outline-forced-colors) none',
+    outline: 'none',
+    // eslint-disable-next-line @stylexjs/valid-styles
+    '@media (forced-colors: active)': {
+      outline: 'var(--focus-ring-outline-forced-colors)',
+    },
   },
   focusRingInset: {
     boxShadow: 'var(--focus-ring-shadow-inset)',

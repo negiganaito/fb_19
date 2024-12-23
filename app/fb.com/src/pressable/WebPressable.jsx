@@ -242,6 +242,9 @@ function responseRoleType(type) {
 // eslint-disable-next-line complexity
 export const WebPressable = (props) => {
   const targetRef = useRef(null);
+
+  console.log({ targetRef });
+
   //
   const [focusChangeState, setFocusChangeState] = useState(false);
   const [focusVisibleChangeState, setFocusVisibleChangeState] = useState(false);
@@ -303,6 +306,8 @@ export const WebPressable = (props) => {
     typeof className_DEPRECATED === 'function' ? className_DEPRECATED(_props) : className_DEPRECATED;
   const _style = typeof style === 'function' ? style(_props) : style;
   const _className = typeof xstyle === 'function' ? xstyle(_props) : xstyle;
+
+  console.log({ targetRef });
 
   WebPressability.usePressability(targetRef, {
     disabled: _disabled,

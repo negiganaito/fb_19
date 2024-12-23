@@ -9,43 +9,9 @@ import joinClasses from 'fbjs/lib/joinClasses';
 
 import { WebPressability } from './WebPressability';
 
-const styles = stylex.create({
-  disabled: {
-    cursor: 'not-allowed',
-  },
-  focusNotVisible: {
-    outline: 'none',
-  },
-  linkFocusRingXStyle: {
-    // "var(--base-blue) auto 2px
-    outline: '2px auto var(--base-blue)',
-  },
-  notSelectable: {
-    userSelect: 'none',
-  },
-  root: {
-    WebkitTapHighlightColor: 'transparent',
-    backgroundColor: 'transparent',
-    borderWidth: '0',
-    boxSizing: 'border-box',
-    cursor: 'pointer',
-    display: 'inline',
-    listStyleType: 'none',
-    margin: '0',
-    padding: '0',
-    textAlign: 'inherit',
-    textDecoration: 'none',
-    touchAction: 'manipulation',
-  },
-
-  rootInGroup: {
-    touchAction: 'none',
-  },
-});
-
 // eslint-disable-next-line complexity
 export function PressableText(props) {
-  const bRef = useRef(null);
+  const targetRef = useRef(null);
 
   const [focused, setFocusedChange] = useState(false);
   const [focusVisible, setFocusVisibleChange] = useState(false);
@@ -53,6 +19,8 @@ export function PressableText(props) {
   const [presss, setPressChange] = useState(false);
 
   const pressableGroupContextValue = useContext(WebPressableGroupContext);
+
+  console.log({ hoverr });
 
   // TODO
   const {
@@ -119,7 +87,7 @@ export function PressableText(props) {
 
   const _className = typeof xstyle === 'function' ? xstyle(_props) : xstyle;
 
-  WebPressability.usePressability(bRef, {
+  WebPressability.usePressability(targetRef, {
     disabled: _disabled,
     onBlur: onBlur,
     onContextMenu: onContextMenu,
@@ -187,9 +155,9 @@ export function PressableText(props) {
   }
 
   // const mergeRef = useMergeRefs_Legacy(bRef, forwardedRef);
-  const mergeRef = useMergeRefs(bRef, forwardedRef);
+  const mergeRef = useMergeRefs(targetRef, forwardedRef);
 
-  useWebPressableTouchStartHandler(bRef, pressableGroupContextValue, onClickCbFunc);
+  useWebPressableTouchStartHandler(targetRef, pressableGroupContextValue, onClickCbFunc);
 
   // vFuncHooks(bRef, pressableGroupContextValue, onClickCbFunc);
 
@@ -238,7 +206,7 @@ export function PressableText(props) {
       aria-selected={!accessibilityState ? undefined : accessibilityState.selected}
       attributionsrc={anchorTagAndNotDisable ? (!link ? undefined : link.attributionsrc) : undefined}
       className={joinClasses(
-        stylex.props(
+        stylex(
           styles.root,
           selectable === false && styles.notSelectable,
           _props.disabled && styles.disabled,
@@ -246,7 +214,7 @@ export function PressableText(props) {
           _props.focusVisible && anchorTagOrButtonRole && styles.linkFocusRingXStyle,
           _className,
           pressableGroupContextValue && styles.rootInGroup,
-        ).className,
+        ),
         _className_DEPRECATED,
       )}
       data-testid={undefined}
@@ -367,3 +335,37 @@ const shouldTriggerActionOnEvent = function (event) {
   }
   return false;
 };
+
+const styles = stylex.create({
+  disabled: {
+    cursor: 'not-allowed',
+  },
+  focusNotVisible: {
+    outline: 'none',
+  },
+  linkFocusRingXStyle: {
+    // "var(--base-blue) auto 2px
+    outline: '2px auto var(--base-blue)',
+  },
+  notSelectable: {
+    userSelect: 'none',
+  },
+  root: {
+    WebkitTapHighlightColor: 'transparent',
+    backgroundColor: 'transparent',
+    borderWidth: '0',
+    boxSizing: 'border-box',
+    cursor: 'pointer',
+    display: 'inline',
+    listStyleType: 'none',
+    margin: '0',
+    padding: '0',
+    textAlign: 'inherit',
+    textDecoration: 'none',
+    touchAction: 'manipulation',
+  },
+
+  rootInGroup: {
+    touchAction: 'none',
+  },
+});

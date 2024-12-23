@@ -119,6 +119,8 @@ export const BaseButton = forwardRef((props, ref) => {
     xstyle,
   };
 
+  console.log({ display });
+
   if (display === 'block') {
     const accessibilityRole =
       _role === 'menuitem' ||

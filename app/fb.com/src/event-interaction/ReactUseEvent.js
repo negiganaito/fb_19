@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { unstable_createEventHandle } from 'react-dom';
+import REACTDOM from 'react-dom';
 import { useUnsafeRef_DEPRECATED } from '@fb-hooks/useUnsafeRef_DEPRECATED';
 
 /**
@@ -19,7 +19,7 @@ export function ReactUseEvent(event, option) {
   }
 
   if (!useEventHandle) {
-    let setEventHandle = unstable_createEventHandle(event, option);
+    let setEventHandle = REACTDOM.unstable_createEventHandle(event, option);
     let clears = new Map();
 
     useEventHandle = {
