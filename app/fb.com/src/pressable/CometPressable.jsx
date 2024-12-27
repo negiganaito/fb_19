@@ -459,6 +459,8 @@ export const CometPressable = forwardRef((props, externalRef) => {
   // );
 });
 
+CometPressable.displayName = 'CometPressable';
+
 const styles = stylex.create({
   defaultCursor: {
     cursor: 'default',

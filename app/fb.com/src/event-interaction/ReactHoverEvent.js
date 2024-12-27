@@ -63,10 +63,15 @@ const useHover = (target, options) => {
     let targetElement = target.current;
     const hoverTouchRefCurrent = hoverTouchRef.current;
 
-    const hoverTarget = { _hoverEventTarget: true };
+    if (targetElement && hoverTouchRefCurrent) {
+      // targetElement = { ...targetElement, _hoverEventTarget: true };
 
-    if (target.current && hoverTouchRefCurrent) {
-      targetElement = { ...targetElement, ...hoverTarget };
+      Object.defineProperty(targetElement, '_hoverEventTarget', {
+        value: true,
+        writable: true,
+        configurable: true,
+        enumerable: true, // Optional: you can make it non-enumerable if you want it hidden from `for...in` or `Object.keys`.
+      });
 
       const handleMouseOut = function (param) {
         hoverTouchRefCurrent.isHovered &&

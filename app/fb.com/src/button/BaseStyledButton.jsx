@@ -263,3 +263,5 @@ export const BaseStyledButton = forwardRef((props, ref) => {
     </CometPressable>
   );
 });
+
+BaseStyledButton.displayName = 'BaseStyledButton';

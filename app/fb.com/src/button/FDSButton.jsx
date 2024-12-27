@@ -140,6 +140,8 @@ const FDSButton = forwardRef((props, ref) => {
   return fdsButtonWrapper;
 });
 
+FDSButton.displayName = 'FDSButton';
+
 const styles = stylex.create({
   contentDisabled: {
     opacity: 0.3,

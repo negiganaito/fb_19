@@ -4,7 +4,7 @@ import { FDSButton } from '@fb-button/FDSButton';
 const FDSButtonExample = () => {
   return (
     <div>
-      <FDSButton label="Lê Xuân Tiến" />
+      <FDSButton label="Lê Xuân Tiến" type="primary" />
     </div>
   );
 };

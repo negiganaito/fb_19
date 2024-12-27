@@ -47,4 +47,6 @@ const WebView = forwardRef((props, ref) => {
   );
 });
 
+WebView.displayName = 'WebView';
+
 export { WebView };
