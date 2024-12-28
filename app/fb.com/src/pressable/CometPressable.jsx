@@ -133,6 +133,8 @@ export const CometPressable = forwardRef((props, externalRef) => {
     />
   );
 
+  console.log({ children });
+
   const _children =
     typeof children === 'function' ? (
       children({
@@ -161,17 +163,6 @@ export const CometPressable = forwardRef((props, externalRef) => {
         })
       : xstyle;
 
-  // overlayHoveredStyle =
-  //     typeof xstyle === 'function'
-  //       ? xstyle({
-  //           disabled: disabled,
-  //           focused: focusedState,
-  //           focusVisible: focusVisibleState,
-  //           hovered: hoveredState,
-  //           pressed: pressedState,
-  //         })
-  //       : xstyle
-
   const cometContainerPressableContextValue = useContext(CometContainerPressableContext);
 
   const cometDangerouslySuppressInteractiveElementsContextValue = useContext(
@@ -195,7 +186,7 @@ export const CometPressable = forwardRef((props, externalRef) => {
 
   let pressedStyle = {};
 
-  if (pressedState && pressedStyleValue) {
+  if (pressedState && pressedStyleValue !== undefined) {
     const { opacity: opacityValue, scale: scaleValue } = pressedStyleValue;
 
     // N = pressedStyleValue.opacity;
@@ -233,13 +224,15 @@ export const CometPressable = forwardRef((props, externalRef) => {
   const ma = useRef(null);
   const Z = useRef(null);
 
+  const _onContextMenu = rest.onContextMenu;
+
   useEffect(() => {
     if (isContainerTarget && cometContainerPressableContextValue) {
       cometContainerPressableContextValue.onMount(
         {
-          onContextMenu: (e) => {
-            preventContextMenu === true && e.preventDefault();
-            rest.onContextMenu && rest.onContextMenu(e);
+          onContextMenu: (ev) => {
+            preventContextMenu === true && ev.preventDefault();
+            _onContextMenu && _onContextMenu(ev);
           },
           onPress: () => {
             Z.current && Z.current.click();
@@ -254,22 +247,20 @@ export const CometPressable = forwardRef((props, externalRef) => {
     cometContainerPressableContextValue,
     isContainerTarget,
     testOnly_pressed,
-    rest.onContextMenu,
+    _onContextMenu,
     preventContextMenu,
     !linkProps ? undefined : linkProps.url,
     !linkProps ? undefined : linkProps.target,
   ]);
 
   useEffect(() => {
-    const a = Z.current;
-
-    if (!a) {
+    if (!Z.current) {
       return;
     }
 
-    if (a === document.activeElement) {
+    if (Z.current === document.activeElement) {
       onFocusChangeCb(true);
-      ReactFocusEvent.getGlobalFocusVisible() && onFocusVisibleChangeCb(!0);
+      ReactFocusEvent.getGlobalFocusVisible() && onFocusVisibleChangeCb(true);
     }
   }, [onFocusChangeCb, onFocusVisibleChangeCb]);
 
@@ -304,7 +295,6 @@ export const CometPressable = forwardRef((props, externalRef) => {
     return (
       <BaseLink
         {..._props}
-        // onContextMenu={onContextMenu}
         {...rest}
         {...baseLinkProps}
         className_DEPRECATED={className_DEPRECATED}
@@ -345,118 +335,6 @@ export const CometPressable = forwardRef((props, externalRef) => {
       {_children}
     </BaseButton>
   );
-
-  // useEffect(
-  //   () => {
-
-  //     if (isContainerTarget && cometContainerPressableContextValue ) {
-  //       cometContainerPressableContextValue.onMount()
-  //     }
-
-  //     //   if (isContainerTarget && cometContainerPressableContextValue) {
-  //     //     // @ts-ignore
-  //     //     cometContainerPressableContextValue.onMount(
-  //     //       {
-  //     //         onContextMenu: (e) => {
-  //     //           preventContextMenu === true && e.preventDefault()
-  //     //           onContextMenu !== undefined && onContextMenu(e)
-  //     //         },
-  //     //         onPress: () => {
-  //     //           internalRef.current && internalRef.current.click()
-  //     //         },
-  //     //         target: !linkProps ? undefined : linkProps.target,
-  //     //         url: !linkProps ? undefined : linkProps.url,
-  //     //       },
-  //     //       ga,
-  //     //     )
-  //     //   }
-  //   },
-  //   [
-  //     //   cometContainerPressableContextValue,
-  //     //   isContainerTarget,
-  //     //   testOnly_pressed,
-  //     //   onContextMenu,
-  //     //   preventContextMenu,
-  //     //   !linkProps ? undefined : linkProps.url,
-  //     //   !linkProps ? undefined : linkProps.target,
-  //   ]
-  // );
-
-  // BUG
-  // const ref = useMergeRefs_Legacy(externalRef, internalRef);
-  // const ref = useMergeRefs(externalRef, internalRef);
-
-  // TODO
-  // if (cometDangerouslySuppressInteractiveElementsContextValue) {
-  //   const comp = _display === 'inline' ? 'span' : 'div'
-  //   return jsx(
-  //     comp,
-  //     babelHelpers['extends'](
-  //       {
-  //         className_DEPRECATED: className_DEPRECATED,
-  //         display: _display === 'inline' ? _display : 'block',
-  //         preventContextMenu: preventContextMenu,
-  //       },
-  //       testOnly_pressed,
-  //       {
-  //         className: c('stylex')(overlayRadius),
-  //         'data-testid': undefined,
-  //         ref: overlayFocusVisibleStyle,
-  //         children: hideHoverOverlay,
-  //       },
-  //     ),
-  //   )
-  // }
-
-  // if (linkProps) {
-  //   const { url, ...restLinkProps } = linkProps;
-
-  //   const baseLinkProps = { ...restLinkProps, href: url };
-
-  //   return (
-  //     <BaseLink
-  //       {..._props}
-  //       // onContextMenu={onContextMenu}
-  //       {...rest}
-  //       {...baseLinkProps}
-  //       className_DEPRECATED={className_DEPRECATED}
-  //       disabled={disabled}
-  //       display={_display === 'inline' ? _display : 'block'}
-  //       preventContextMenu={preventContextMenu}
-  //       // BUG
-  //       // ref={ref}
-  //       ref={externalRef}
-  //       // suppressFocusRing={!_suppressFocusRing || n}
-  //       suppressFocusRing
-  //       testid={undefined}
-  //       xstyle={_className}
-  //     >
-  //       {_children}
-  //     </BaseLink>
-  //   );
-  // }
-
-  // return (
-  //   <BaseButton
-  //     {..._props}
-  //     {...rest}
-  //     allowClickEventPropagation={allowClickEventPropagation}
-  //     className_DEPRECATED={className_DEPRECATED}
-  //     disabled={disabled}
-  //     display={_display === 'inline' ? _display : 'block'}
-  //     preventContextMenu={preventContextMenu}
-  //     // BUG
-  //     // ref={ref}
-  //     ref={externalRef}
-  //     // ref={ref}
-  //     // suppressFocusRing={!_suppressFocusRing || n}
-  //     suppressFocusRing
-  //     testid={undefined}
-  //     xstyle={_className}
-  //   >
-  //     {_children}
-  //   </BaseButton>
-  // );
 });
 
 CometPressable.displayName = 'CometPressable';

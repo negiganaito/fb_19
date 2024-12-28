@@ -5,7 +5,7 @@
 import { useEffect as i, useRef as j } from 'react';
 import { ReactEventHelpers } from '@fb-event-interaction/ReactEventHelpers';
 import { ReactEventHookPropagation } from '@fb-event-interaction/ReactEventHookPropagation';
-import { ReactUseEvent } from '@fb-event-interaction/ReactUseEvent';
+import { useReactEvent } from '@fb-event-interaction/ReactUseEvent';
 
 const k = {
   passive: !0,
@@ -57,15 +57,15 @@ function usePress(a, b) {
     buttons: 0,
     activationEvent: null,
   });
-  var o = ReactUseEvent('pointerdown');
-  var p = ReactUseEvent('pointermove', k);
-  var q = ReactUseEvent('pointerup', k);
-  var r = ReactUseEvent('pointercancel', k);
-  var s = ReactUseEvent('mousedown');
-  var t = ReactUseEvent('mouseup', k);
-  var u = ReactUseEvent('mousemove', k);
-  var v = ReactUseEvent('dragstart', k);
-  var w = ReactUseEvent('focusout', k);
+  var o = useReactEvent('pointerdown');
+  var p = useReactEvent('pointermove', k);
+  var q = useReactEvent('pointerup', k);
+  var r = useReactEvent('pointercancel', k);
+  var s = useReactEvent('mousedown');
+  var t = useReactEvent('mouseup', k);
+  var u = useReactEvent('mousemove', k);
+  var v = useReactEvent('dragstart', k);
+  var w = useReactEvent('focusout', k);
   i(() => {
     var b = a.current;
     var c = n.current;

@@ -6,7 +6,7 @@
 import { useEffect, useRef } from 'react';
 import { ReactEventHelpers } from '@fb-event-interaction/ReactEventHelpers';
 import { ReactEventHookPropagation } from '@fb-event-interaction/ReactEventHookPropagation';
-import { ReactUseEvent } from '@fb-event-interaction/ReactUseEvent';
+import { useReactEvent } from '@fb-event-interaction/ReactUseEvent';
 
 function k(a, b, c) {
   return {
@@ -41,14 +41,14 @@ function useHover(a, b) {
   let g = b.onHoverMove;
   let h = b.onHoverEnd;
   let n = b.onHoverChange;
-  let o = ReactUseEvent('touchstart', l);
-  let p = ReactUseEvent('mouseover', l);
-  let q = ReactUseEvent('mouseout', l);
-  let r = ReactUseEvent('mousemove', l);
-  let s = ReactUseEvent('pointerover', l);
-  let t = ReactUseEvent('pointerout', l);
-  let u = ReactUseEvent('pointermove', l);
-  let v = ReactUseEvent('pointercancel', l);
+  let o = useReactEvent('touchstart', l);
+  let p = useReactEvent('mouseover', l);
+  let q = useReactEvent('mouseout', l);
+  let r = useReactEvent('mousemove', l);
+  let s = useReactEvent('pointerover', l);
+  let t = useReactEvent('pointerout', l);
+  let u = useReactEvent('pointermove', l);
+  let v = useReactEvent('pointercancel', l);
   let w = useRef({
     isHovered: !1,
     isTouched: !1,

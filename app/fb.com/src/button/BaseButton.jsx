@@ -1,7 +1,10 @@
 import React, { forwardRef, useContext } from 'react';
 import { BaseButtonPopoverContext } from '@fb-contexts/BaseButtonPopoverContext';
-import { Pressable } from '@fb-pressable/pressable';
-import { PressableText } from '@fb-pressable/PressableText';
+// import { Pressable } from '@fb-pressable/pressable';
+// import { PressableText } from '@fb-pressable/PressableText';
+
+const PressableText = React.lazy(() => import('@fb-pressable/lazy/PressableText'));
+const Pressable = React.lazy(() => import('@fb-pressable/lazy/WebPressable'));
 
 // eslint-disable-next-line complexity
 export const BaseButton = forwardRef((props, ref) => {
@@ -45,6 +48,7 @@ export const BaseButton = forwardRef((props, ref) => {
     style,
     suppressFocusRing,
     suppressHydrationWarning,
+    // eslint-disable-next-line no-unused-vars
     testid,
     testOnly_pressed = false,
     xstyle,
@@ -118,8 +122,6 @@ export const BaseButton = forwardRef((props, ref) => {
     },
     xstyle,
   };
-
-  console.log({ display });
 
   if (display === 'block') {
     const accessibilityRole =

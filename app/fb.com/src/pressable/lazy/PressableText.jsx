@@ -2,12 +2,11 @@ import React, { useCallback, useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WebPressableGroupContext } from '@fb-contexts/WebPressableGroupContext';
 import { useWebPressableTouchStartHandler } from '@fb-event-interaction/useWebPressableTouchStartHandler';
+import { usePressability } from '@fb-pressable/usePressability';
 import { gkx } from '@fb-utils/gkx';
 import { useMergeRefs } from '@fb-utils/useMergeRefs';
 import stylex from '@stylexjs/stylex';
 import joinClasses from 'fbjs/lib/joinClasses';
-
-import { usePressability } from './usePressability';
 
 // eslint-disable-next-line complexity
 const PressableText = (props) => {
@@ -370,4 +369,4 @@ const styles = stylex.create({
   },
 });
 
-export { PressableText };
+export default PressableText;

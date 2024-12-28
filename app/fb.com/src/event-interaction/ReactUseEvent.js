@@ -8,21 +8,26 @@ import { useUnsafeRef_DEPRECATED } from '@fb-hooks/useUnsafeRef_DEPRECATED';
  * @param {import("./types").EventOption} option
  * @returns {UseEventHandle}
  */
-export function ReactUseEvent(event, option) {
+export const useReactEvent = (event, option) => {
   // TODO jsdoc with generic ref
   const handleRef = useUnsafeRef_DEPRECATED(null);
 
-  let useEventHandle = handleRef.current;
+  let handleRefValue = handleRef.current;
 
   if (option) {
-    option.passive = undefined;
+    Object.defineProperty(option, 'passive', {
+      value: undefined,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
   }
 
-  if (!useEventHandle) {
-    let setEventHandle = REACTDOM.unstable_createEventHandle(event, option);
-    let clears = new Map();
+  if (!handleRefValue) {
+    const setEventHandle = REACTDOM.unstable_createEventHandle(event, option);
+    const clears = new Map();
 
-    useEventHandle = {
+    handleRefValue = {
       /**
        *
        * @param {EventTarget} target
@@ -54,17 +59,17 @@ export function ReactUseEvent(event, option) {
       },
     };
 
-    handleRef.current = useEventHandle;
+    handleRef.current = handleRefValue;
   }
 
   useLayoutEffect(() => {
     return () => {
-      if (useEventHandle) {
-        useEventHandle.clear();
+      if (handleRefValue) {
+        handleRefValue.clear();
       }
       handleRef.current = null;
     };
-  }, [useEventHandle]);
+  }, [handleRefValue]);
 
-  return useEventHandle;
-}
+  return handleRefValue;
+};

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { unstable_createEventHandle } from 'react-dom';
 import { ReactEventHelpers } from '@fb-event-interaction/ReactEventHelpers';
 import { ReactEventHookPropagation } from '@fb-event-interaction/ReactEventHookPropagation';
-import { ReactUseEvent } from '@fb-event-interaction/ReactUseEvent';
+import { useReactEvent } from '@fb-event-interaction/ReactUseEvent';
 import { useUnsafeRef_DEPRECATED } from '@fb-hooks/useUnsafeRef_DEPRECATED';
 import { gkx } from '@fb-utils/gkx';
 
@@ -124,9 +124,9 @@ function setFocusVisibleListeners(focusVisibleHandles, focusTarget, c, callback)
 }
 
 function useFocusVisibleInputHandles() {
-  const mousedownHandle = ReactUseEvent('mousedown', eventOption);
-  const pointerHandle = ReactUseEvent(ReactEventHelpers.hasPointerEvents ? 'pointerdown' : 'touchstart', eventOption);
-  const keydownHandle = ReactUseEvent('keydown', eventOption);
+  const mousedownHandle = useReactEvent('mousedown', eventOption);
+  const pointerHandle = useReactEvent(ReactEventHelpers.hasPointerEvents ? 'pointerdown' : 'touchstart', eventOption);
+  const keydownHandle = useReactEvent('keydown', eventOption);
 
   return [mousedownHandle, pointerHandle, keydownHandle];
 }
@@ -159,8 +159,8 @@ function useFocus(focusTargetRef, { disabled, onBlur, onFocus, onFocusChange, on
     isFocused: false,
   });
 
-  const focusHandle = ReactUseEvent('focusin', eventOption);
-  const blurHandle = ReactUseEvent('focusout', eventOption);
+  const focusHandle = useReactEvent('focusin', eventOption);
+  const blurHandle = useReactEvent('focusout', eventOption);
   const focusVisibleHandles = useFocusVisibleInputHandles();
 
   useLayoutEffect(() => {
@@ -367,10 +367,10 @@ function useFocusWithin(
     isFocused: false,
   });
 
-  const focusHandle = ReactUseEvent('focusin', eventOption);
-  const blurHandle = ReactUseEvent('focusout', eventOption);
-  const afterBlurHandle = ReactUseEvent('afterblur', eventOption);
-  const beforeBlurHandle = ReactUseEvent('beforeblur', eventOption);
+  const focusHandle = useReactEvent('focusin', eventOption);
+  const blurHandle = useReactEvent('focusout', eventOption);
+  const afterBlurHandle = useReactEvent('afterblur', eventOption);
+  const beforeBlurHandle = useReactEvent('beforeblur', eventOption);
 
   const focusVisibleHandles = useFocusVisibleInputHandles();
 

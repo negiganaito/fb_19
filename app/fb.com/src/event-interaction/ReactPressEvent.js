@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { ReactEventHelpers } from './ReactEventHelpers';
 import { ReactEventHookPropagation } from './ReactEventHookPropagation';
-import { ReactUseEvent } from './ReactUseEvent';
+import { useReactEvent } from './ReactUseEvent';
 
 const eventOptions = {
   passive: !0,
@@ -48,15 +48,15 @@ function createExtendedEventObject(type, buttons, pointerType, originalEvent, ta
 const usePress = (target, options) => {
   const { disabled, onPressStart, onPressMove, onPressEnd, onPressChange } = options;
 
-  const pointerdownHandler = ReactUseEvent('pointerdown');
-  const pointermoveHanlder = ReactUseEvent('pointermove', eventOptions);
-  const pointerupHandler = ReactUseEvent('pointerup', eventOptions);
-  const pointercancelHandler = ReactUseEvent('pointercancel', eventOptions);
-  const mousedownHandler = ReactUseEvent('mousedown');
-  const mouseupHandler = ReactUseEvent('mouseup', eventOptions);
-  const mousemoveHandler = ReactUseEvent('mousemove', eventOptions);
-  const dragstartHandler = ReactUseEvent('dragstart', eventOptions);
-  const focusoutHandler = ReactUseEvent('focusout', eventOptions);
+  const pointerdownHandler = useReactEvent('pointerdown');
+  const pointermoveHanlder = useReactEvent('pointermove', eventOptions);
+  const pointerupHandler = useReactEvent('pointerup', eventOptions);
+  const pointercancelHandler = useReactEvent('pointercancel', eventOptions);
+  const mousedownHandler = useReactEvent('mousedown');
+  const mouseupHandler = useReactEvent('mouseup', eventOptions);
+  const mousemoveHandler = useReactEvent('mousemove', eventOptions);
+  const dragstartHandler = useReactEvent('dragstart', eventOptions);
+  const focusoutHandler = useReactEvent('focusout', eventOptions);
 
   const pressRef = useRef({
     activationEvent: null,

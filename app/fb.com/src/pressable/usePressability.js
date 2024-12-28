@@ -1,9 +1,9 @@
-import { ReactFocusEvent } from '@fb-event-interaction/19/ReactFocusEvent';
-import { ReactPressEvent } from '@fb-event-interaction/19/ReactPressEvent';
 import { ReactContextMenuEvent } from '@fb-event-interaction/ReactContextMenuEvent';
+import { ReactFocusEvent } from '@fb-event-interaction/ReactFocusEvent';
 import { ReactHoverEvent } from '@fb-event-interaction/ReactHoverEvent';
+import { ReactPressEvent } from '@fb-event-interaction/ReactPressEvent';
 
-function usePressability(targetRef, options) {
+const usePressability = (targetRef, options) => {
   const {
     disabled,
     onBlur,
@@ -30,14 +30,6 @@ function usePressability(targetRef, options) {
     onHoverStart,
   });
 
-  // ReactHoverEvent_Legacy.useHover(targetRef, {
-  //   disabled,
-  //   onHoverChange,
-  //   onHoverEnd,
-  //   onHoverMove,
-  //   onHoverStart,
-  // });
-
   // ReactPressEvent.usePress(targetRef, {
   //   disabled,
   //   onPressChange,
@@ -59,8 +51,6 @@ function usePressability(targetRef, options) {
   //   onContextMenu,
   //   preventDefault: preventContextMenu || false,
   // });
-}
-
-export const WebPressability = {
-  usePressability,
 };
+
+export { usePressability };

@@ -9,7 +9,7 @@ import stylex from '@stylexjs/stylex';
 
 import { BaseStyledButton } from './BaseStyledButton';
 
-const FDSButton = forwardRef((props, ref) => {
+const _FDSButton = (props, ref) => {
   const {
     addOnPrimary,
     addOnSecondary,
@@ -60,13 +60,13 @@ const FDSButton = forwardRef((props, ref) => {
 
   const combineRef = useMergeRefs(internalRef, ref);
 
-  const buttonContent = labelIsHidden ? null : (
-    <FDSText color={buttonColor} numberOfLines={1} type={size === 'large' ? 'button1' : 'button2'}>
-      {label}
-    </FDSText>
-  );
+  // const buttonContent = labelIsHidden ? null : (
+  //   <FDSText color={buttonColor} numberOfLines={1} type={size === 'large' ? 'button1' : 'button2'}>
+  //     {label}
+  //   </FDSText>
+  // );
 
-  const iconContent = icon && <FDSIcon color={buttonOverlayStateColor} icon={icon} isDecorative size={16} />;
+  // const iconContent = icon && <FDSIcon color={buttonOverlayStateColor} icon={icon} isDecorative size={16} />;
 
   const buttonComp = (
     <BaseStyledButton
@@ -74,7 +74,13 @@ const FDSButton = forwardRef((props, ref) => {
       addOnEnd={addOnSecondary}
       addOnStart={addOnPrimary}
       aria-label={_ariaLabel}
-      content={buttonContent}
+      content={
+        labelIsHidden ? null : (
+          <FDSText color={buttonColor} numberOfLines={1} type={size === 'large' ? 'button1' : 'button2'}>
+            {label}
+          </FDSText>
+        )
+      }
       contentXstyle={[
         type === 'overlay' && disabled && styles.contentDisabled,
         type === 'overlay' && themeClassName,
@@ -83,7 +89,7 @@ const FDSButton = forwardRef((props, ref) => {
         icon && labelIsHidden && styles.paddingIconOnly,
       ]}
       disabled={disabled}
-      icon={iconContent}
+      icon={icon && <FDSIcon color={buttonOverlayStateColor} icon={icon} isDecorative size={16} />}
       id={id}
       linkProps={linkProps}
       onFocusIn={onFocusIn}
@@ -138,9 +144,11 @@ const FDSButton = forwardRef((props, ref) => {
   // }
 
   return fdsButtonWrapper;
-});
+};
 
-FDSButton.displayName = 'FDSButton';
+_FDSButton.displayName = 'FDSButton';
+
+export const FDSButton = forwardRef(_FDSButton);
 
 const styles = stylex.create({
   contentDisabled: {
@@ -272,5 +280,3 @@ const buttonOverlayStyle = {
     disabled: 'disabled',
   },
 };
-
-export { FDSButton };

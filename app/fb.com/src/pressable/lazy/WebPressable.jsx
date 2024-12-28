@@ -2,10 +2,9 @@ import React, { useCallback, useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WebPressableGroupContext } from '@fb-contexts/WebPressableGroupContext';
 import { useWebPressableTouchStartHandler } from '@fb-event-interaction/useWebPressableTouchStartHandler';
+import { usePressability } from '@fb-pressable/usePressability';
 import stylex from '@stylexjs/stylex';
 import joinClasses from 'fbjs/lib/joinClasses';
-
-import { usePressability } from './usePressability';
 
 // Assuming there is a function c("UserAgent").isBrowser() that checks the user agent
 // It returns true if the user agent is "Safari" or "Mobile Safari", otherwise false
@@ -240,7 +239,7 @@ function responseRoleType(type) {
  * @returns
  */
 // eslint-disable-next-line complexity
-export const WebPressable = (props) => {
+const WebPressable = (props) => {
   const targetRef = useRef(null);
 
   console.log({ targetRef });
@@ -454,3 +453,5 @@ export const WebPressable = (props) => {
     </LinkComp>
   );
 };
+
+export default WebPressable;

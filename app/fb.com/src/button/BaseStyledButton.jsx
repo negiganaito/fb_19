@@ -1,9 +1,3 @@
-/**
- * @fileoverview
- * Copyright (c) Xuan Tien and affiliated entities.
- * All rights reserved. This source code is licensed under the MIT license.
- * See the LICENSE file in the root directory for details.
- */
 import React, { forwardRef, useRef } from 'react';
 import { BaseRow } from '@fb-layout/BaseRow';
 import { BaseRowItem } from '@fb-layout/BaseRowItem';
@@ -12,69 +6,20 @@ import { stylexCompat } from '@fb-utils/stylexCompat';
 import { stylexCompose } from '@fb-utils/stylexCompose';
 import stylex from '@stylexjs/stylex';
 
-const styles = stylex.create({
-  button: {
-    boxSizing: 'border-box',
-    display: 'inline-flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    position: 'relative',
-    width: '100%',
-  },
-  content: {
-    borderRadius: 'var(--button-corner-radius)',
-    borderWidth: '0',
-
-    boxSizing: 'border-box',
-    paddingRight: '12px',
-    paddingLeft: '12px',
-  },
-  disabled: {
-    backgroundColor: 'var(--disabled-button-background)',
-  },
-  item: {
-    alignItems: 'center',
-    display: 'flex',
-    flexShrink: 0,
-    marginRight: 'var(--button-inner-icon-spacing-medium)',
-    marginLeft: 'var(--button-inner-icon-spacing-medium)',
-  },
-  offset: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    marginRight: 'calc(-1*var(--button-inner-icon-spacing-medium))',
-    marginLeft: 'calc(-1*var(--button-inner-icon-spacing-medium))',
-    width: 'calc(100% + 6px)',
-  },
-  paddingWide: {
-    paddingRight: '40px',
-    paddingLeft: '40px',
-  },
-  sizeLargeItem: {
-    marginRight: 'var(--button-inner-icon-spacing-large)',
-    marginLeft: 'var(--button-inner-icon-spacing-large)',
-  },
-  sizeLargeOffset: {
-    marginRight: 'calc(-1*var(--button-inner-icon-spacing-large))',
-    marginLeft: 'calc(-1*var(--button-inner-icon-spacing-large))',
-  },
-});
-
 const SCALE_FACTOR = 0.96;
 const PRESS_OFFSET = 10;
 
 const cache = new WeakMap();
 
-function extractStyles(_styles) {
-  if (!_styles) {
+const extractStyles = (xstyle) => {
+  if (!xstyle) {
     return [{}, {}];
   }
-  let cachedStyles = cache.get(_styles);
+  let cachedStyles = cache.get(xstyle);
   if (cachedStyles) {
     return cachedStyles;
   }
-  cachedStyles = stylexCompose.compose(_styles);
+  cachedStyles = stylexCompose.compose(xstyle);
 
   const {
     alignSelf,
@@ -127,14 +72,14 @@ function extractStyles(_styles) {
 
   const namespaces = [stylexCompat.makeNamespace(filteredXStyleProps), stylexCompat.makeNamespace(restStyle)];
 
-  cache.set(_styles, namespaces);
+  cache.set(xstyle, namespaces);
   return namespaces;
-}
+};
 
 /**
  * @type React.ForwardRefRenderFunction<React.FunctionComponent, import("./types").BaseStyledButtonProps>
  */
-export const BaseStyledButton = forwardRef((props, ref) => {
+const _BaseStyledButton = (props, ref) => {
   const {
     addOnAbsolute,
     addOnEnd,
@@ -190,7 +135,6 @@ export const BaseStyledButton = forwardRef((props, ref) => {
 
   const baseRowItemStyle = [styles.item, size === 'large' && styles.sizeLargeItem];
 
-  // eslint-disable-next-line react/no-unstable-nested-components
   const ButtonContent = (childProps) => {
     const { overlay } = childProps;
 
@@ -198,6 +142,7 @@ export const BaseStyledButton = forwardRef((props, ref) => {
       <BaseRow
         align="center"
         ref={childRef}
+        role="none"
         verticalAlign="center"
         xstyle={[
           styles.content,
@@ -207,7 +152,7 @@ export const BaseStyledButton = forwardRef((props, ref) => {
           contentXstyle,
         ]}
       >
-        <div className={stylex([styles.offset, size === 'large' && styles.sizeLargeOffset])}>
+        <div {...stylex.props([styles.offset, size === 'large' && styles.sizeLargeOffset])}>
           {addOnStart ? (
             <BaseRowItem role="none" useDeprecatedStyles xstyle={baseRowItemStyle}>
               {addOnStart}
@@ -262,6 +207,57 @@ export const BaseStyledButton = forwardRef((props, ref) => {
       {ButtonContent}
     </CometPressable>
   );
-});
+};
 
-BaseStyledButton.displayName = 'BaseStyledButton';
+_BaseStyledButton.displayName = 'BaseStyledButton';
+
+export const BaseStyledButton = forwardRef(_BaseStyledButton);
+
+const styles = stylex.create({
+  button: {
+    boxSizing: 'border-box',
+    display: 'inline-flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    position: 'relative',
+    width: '100%',
+  },
+  content: {
+    borderRadius: 'var(--button-corner-radius)',
+    borderWidth: '0',
+
+    boxSizing: 'border-box',
+    paddingRight: '12px',
+    paddingLeft: '12px',
+  },
+  disabled: {
+    backgroundColor: 'var(--disabled-button-background)',
+  },
+  item: {
+    alignItems: 'center',
+    display: 'flex',
+    flexShrink: 0,
+    marginRight: 'var(--button-inner-icon-spacing-medium)',
+    marginLeft: 'var(--button-inner-icon-spacing-medium)',
+  },
+  offset: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    marginRight: 'calc(-1*var(--button-inner-icon-spacing-medium))',
+    marginLeft: 'calc(-1*var(--button-inner-icon-spacing-medium))',
+    width: 'calc(100% + 6px)',
+  },
+  paddingWide: {
+    paddingRight: '40px',
+    paddingLeft: '40px',
+  },
+  sizeLargeItem: {
+    marginRight: 'var(--button-inner-icon-spacing-large)',
+    marginLeft: 'var(--button-inner-icon-spacing-large)',
+  },
+  sizeLargeOffset: {
+    marginRight: 'calc(-1*var(--button-inner-icon-spacing-large))',
+    marginLeft: 'calc(-1*var(--button-inner-icon-spacing-large))',
+  },
+});

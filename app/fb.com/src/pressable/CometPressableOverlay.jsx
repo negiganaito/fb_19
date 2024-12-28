@@ -11,7 +11,7 @@ import { CometPressableOverlayContainer } from './CometPressableOverlayContainer
  * @returns
  */
 // eslint-disable-next-line complexity
-export const CometPressableOverlay = (props) => {
+const CometPressableOverlay = (props) => {
   const {
     focusRingPosition = 'default',
     focusVisible = false,
@@ -28,28 +28,26 @@ export const CometPressableOverlay = (props) => {
 
   const [state, setState] = useState();
 
-  if (pressed) {
-    state !== 'pressed' && setState('pressed');
-  } else {
-    if (focusVisible) {
-      state !== 'focused' && setState('focused');
-    } else {
-      hovered && state !== 'hovered' && setState('hovered');
-    }
-  }
+  // if (pressed) {
+  //   state !== 'pressed' && setState('pressed');
+  // } else {
+  //   if (focusVisible) {
+  //     state !== 'focused' && setState('focused');
+  //   } else {
+  //     hovered && state !== 'hovered' && setState('hovered');
+  //   }
+  // }
 
-  console.log({ state });
+  pressed
+    ? state !== 'pressed' && setState('pressed')
+    : focusVisible
+    ? state !== 'focused' && setState('focused')
+    : hovered && state !== 'hovered' && setState('hovered');
 
-  // pressed
-  //   ? state !== 'pressed' && setState('pressed')
-  //   : focusVisible
-  //   ? state !== 'focused' && setState('focused')
-  //   : hovered && state !== 'hovered' && setState('hovered');
-
-  let bottom;
-  let left;
-  let right;
-  let top;
+  let bottom = 0;
+  let left = 0;
+  let right = 0;
+  let top = 0;
 
   if (offset) {
     if (typeof offset === 'number') {
@@ -82,10 +80,12 @@ export const CometPressableOverlay = (props) => {
         styles.overlay,
         XPlatReactEnvironment.isWeb() && styles.overlayWeb,
         xstyle,
-        (pressed || focusVisible || hovered) && styles.overlayVisible,
-        state === 'pressed' && pressedStyle,
-        state === 'focus' && focusVisibleStyle,
-        state === 'hovered' && hoveredStyle,
+        (pressed || focusVisible || hovered) && [
+          styles.overlayVisible,
+          state === 'pressed' && pressedStyle,
+          state === 'focus' && focusVisibleStyle,
+          state === 'hovered' && hoveredStyle,
+        ],
         state === 'focused' && showFocusRing
           ? focusRingPosition === 'default'
             ? styles.focusRing
@@ -95,11 +95,14 @@ export const CometPressableOverlay = (props) => {
       ]}
       {...CometVisualCompletionAttributes.IGNORE}
       role="none"
+      children={undefined}
     />
   );
 };
 
 CometPressableOverlay.displayName = 'CometPressableOverlay.react';
+
+export { CometPressableOverlay };
 
 const styles = stylex.create({
   circle: {

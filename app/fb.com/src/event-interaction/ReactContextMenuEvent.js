@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
 import { ReactEventHookPropagation } from './ReactEventHookPropagation';
-import { ReactUseEvent } from './ReactUseEvent';
+import { useReactEvent } from './ReactUseEvent';
 
 function useContextMenu(target, options) {
   const { disabled, onContextMenu, preventDefault } = options;
 
-  const contextmenuHandler = ReactUseEvent('contextmenu');
+  const contextmenuHandler = useReactEvent('contextmenu');
 
   useEffect(() => {
     const curr = target.current;

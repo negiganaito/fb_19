@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ReactUseEvent } from '@fb-event-interaction/ReactUseEvent';
+import { useReactEvent } from '@fb-event-interaction/ReactUseEvent';
 
 const defaultEventOptions = {
   passive: true,
@@ -8,8 +8,8 @@ const defaultEventOptions = {
 function useKeyboard(ref, options) {
   const { disabled = false, onKeyDown, onKeyUp } = options;
 
-  const keyDownEvent = ReactUseEvent('keydown');
-  const keyUpEvent = ReactUseEvent('keyup', defaultEventOptions);
+  const keyDownEvent = useReactEvent('keydown');
+  const keyUpEvent = useReactEvent('keyup', defaultEventOptions);
 
   useEffect(() => {
     const element = ref.current;
