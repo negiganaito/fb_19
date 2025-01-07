@@ -133,8 +133,6 @@ export const CometPressable = forwardRef((props, externalRef) => {
     />
   );
 
-  console.log({ children });
-
   const _children =
     typeof children === 'function' ? (
       children({

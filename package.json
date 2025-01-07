@@ -23,8 +23,8 @@
     "dev": "cd app/fb.com && pnpm dev"
   },
   "dependencies": {
-    "react": "git://github.com/tienlx97/react-experimental.git#www19",
-    "react-dom": "git://github.com/tienlx97/react-dom-experimental.git#www19",
+    "react": "git://github.com/tienlx97/react-experimental.git#www",
+    "react-dom": "git://github.com/tienlx97/react-dom-experimental.git#www",
     "scheduler": "0.25.0",
     "@meta-plugins/configs-commitlint": "workspace:*",
     "@meta-plugins/configs-remark": "workspace:*",

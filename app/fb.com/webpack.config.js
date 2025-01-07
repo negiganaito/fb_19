@@ -63,6 +63,8 @@ module.exports = (env, { mode }) => {
         '@fb-button': path.resolve(__dirname, 'src/button'),
         '@fb-network': path.resolve(__dirname, 'src/network'),
         '@fb-dialog': path.resolve(__dirname, 'src/dialog'),
+        '@fb-glimmer': path.resolve(__dirname, 'src/glimmer'),
+        '@fb-process-ring': path.resolve(__dirname, 'src/process-ring'),
       },
 
       fallback: {
@@ -121,12 +123,12 @@ module.exports = (env, { mode }) => {
                 // ),
               },
             },
-            {
-              loader: reactCompilerLoader,
-              options: defineReactCompilerLoaderOption({
-                // React Compiler options goes here
-              }),
-            },
+            // {
+            //   loader: reactCompilerLoader,
+            //   options: defineReactCompilerLoaderOption({
+            //     // React Compiler options goes here
+            //   }),
+            // },
           ],
         },
         {

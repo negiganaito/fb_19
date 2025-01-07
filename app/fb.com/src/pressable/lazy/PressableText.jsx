@@ -19,8 +19,6 @@ const PressableText = (props) => {
 
   const pressableGroupContextValue = useContext(WebPressableGroupContext);
 
-  console.log({ hoverr });
-
   // TODO
   const {
     accessibilityLabel,

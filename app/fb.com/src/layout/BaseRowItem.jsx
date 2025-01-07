@@ -3,7 +3,7 @@
  * - 09/12/2024
  */
 
-import React, { forwardRef, unstable_useContextWithBailout } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import { BaseRowContext } from '@fb-contexts/BaseRowContext';
 import stylex from '@stylexjs/stylex';
 
@@ -23,7 +23,9 @@ const BaseRowItem = forwardRef((props, ref) => {
   } = props;
 
   // TODO see document
-  const { columns, wrap } = unstable_useContextWithBailout(BaseRowContext, selectBaseRowContextBailout);
+  // const { columns, wrap } = unstable_useContextWithBailout(BaseRowContext, selectBaseRowContextBailout);
+
+  const { columns, wrap } = useContext(BaseRowContext, selectBaseRowContextBailout);
 
   const itemStyle = useDeprecatedStyles ? styles.item_DEPRECATED : styles.item;
 

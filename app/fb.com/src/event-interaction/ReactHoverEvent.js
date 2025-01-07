@@ -46,8 +46,6 @@ const isAncestorOrSelfWithHover = (childRef, parentRef) => {
 };
 
 const useHover = (target, options) => {
-  console.log(target);
-
   const { disabled, onHoverStart, onHoverMove, onHoverEnd, onHoverChange } = options;
 
   const touchstartHandler = useReactEvent('touchstart', hoverOptions);

@@ -4,7 +4,12 @@ import { FDSButton } from '@fb-button/FDSButton';
 const FDSButtonExample = () => {
   return (
     <div>
-      <FDSButton label="Lê Xuân Tiến" type="primary" />
+      <FDSButton label="dark-overlay" type="dark-overlay" />
+      <FDSButton label="fdsOverride_collaborativePostCTA" type="fdsOverride_collaborativePostCTA" />
+      <FDSButton label="overlay" type="overlay" />
+      <FDSButton label="primary" type="primary" />
+      <FDSButton label="secondary" type="secondary" />
+      <FDSButton label="{ reduceEmphasis = true }" reduceEmphasis />
     </div>
   );
 };

@@ -242,8 +242,6 @@ function responseRoleType(type) {
 const WebPressable = (props) => {
   const targetRef = useRef(null);
 
-  console.log({ targetRef });
-
   //
   const [focusChangeState, setFocusChangeState] = useState(false);
   const [focusVisibleChangeState, setFocusVisibleChangeState] = useState(false);

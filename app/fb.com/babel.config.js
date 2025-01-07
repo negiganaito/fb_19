@@ -3,12 +3,6 @@ const reactStrictPreset = require('react-strict-dom/babel-preset');
 
 const path = require('path');
 
-// const ReactCompilerConfig = {
-//   sources: (filename) => {
-//     return filename.indexOf("src/fb/utils") !== -1;
-//   },
-// };
-
 function getPlatform(caller) {
   return caller && caller.platform;
 }
@@ -51,11 +45,18 @@ module.exports = (api) => {
 
     plugins: [
       [
+        'babel-plugin-react-compiler',
+        {
+          target: '18', // '17' | '18' | '19'
+        },
+      ],
+      [
         '@babel/plugin-transform-react-jsx',
         {
           runtime: 'automatic',
         },
       ],
+
       ['relay'],
       [
         styleXPlugin,

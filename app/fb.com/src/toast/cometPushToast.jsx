@@ -12,8 +12,6 @@ let toast;
 function _cometPushToast(props, duration = 2750, externalInstance) {
   const store = externalInstance ?? defaultInstance;
 
-  console.log({ store });
-
   toast = store.push(
     <CometToast
       {...props}

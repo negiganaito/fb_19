@@ -9,7 +9,10 @@ import stylex from '@stylexjs/stylex';
 
 import { BaseStyledButton } from './BaseStyledButton';
 
-const _FDSButton = (props, ref) => {
+/**
+ * @type React.ForwardRefRenderFunction<React.FunctionComponent, import("./types").FDSButtonProps>
+ */
+export const FDSButton = forwardRef((props, ref) => {
   const {
     addOnPrimary,
     addOnSecondary,
@@ -144,11 +147,9 @@ const _FDSButton = (props, ref) => {
   // }
 
   return fdsButtonWrapper;
-};
+});
 
-_FDSButton.displayName = 'FDSButton';
-
-export const FDSButton = forwardRef(_FDSButton);
+FDSButton.displayName = 'FDSButton';
 
 const styles = stylex.create({
   contentDisabled: {
