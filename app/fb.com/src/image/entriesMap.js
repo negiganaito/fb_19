@@ -42,4 +42,26 @@ export const entriesMap = {
     w: 20,
     loggingID: '502062',
   },
+
+  492450: {
+    sprited: 2,
+    spi: '/ix/hfjAwSdyy_q.png',
+    _spi: '/ix/hfjAwSdyy_q.png',
+    w: 16,
+    h: 16,
+    p: '0 -80px',
+    sz: 'auto',
+    loggingID: '492450',
+  },
+
+  505564: {
+    sprited: 2,
+    spi: '/ix/hfjAwSdyy_q.png',
+    _spi: '/ix/hfjAwSdyy_q.png',
+    w: 16,
+    h: 16,
+    p: '0 -97px',
+    sz: 'auto',
+    loggingID: '505564',
+  },
 };
