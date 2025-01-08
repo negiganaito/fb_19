@@ -5,24 +5,33 @@
  * See the LICENSE file in the root directory for details.
  */
 
+/**
+ * Changelog:
+ * - 08/01/2025
+ */
+
 import React from 'react';
 import { BaseFocusRing } from '@fb-focus/BaseFocusRing';
 import { FocusWithinHandler } from '@fb-focus/FocusWithinHandler';
-import { isBlueprintStylesEnabled } from '@fb-hooks/isBlueprintStylesEnabled';
+import { gkx } from '@fb-utils/gkx';
 import { useMergeRefs } from '@fb-utils/useMergeRefs';
 import stylex from '@stylexjs/stylex';
 
+import { FDSFormInputValidationStateIcon } from './FDSFormInputValidationStateIcon';
+import { FDSFormInputWrapperHelperText } from './FDSFormInputWrapperHelperText';
 import { getBaseInputValidationStateDescription } from './getBaseInputValidationStateDescription';
 import { useBaseInputValidationAnnouncement } from './useBaseInputValidationAnnouncement';
 
 function isEmpty(value) {
-  if (Array.isArray(value)) return value.length === 0;
-  if (typeof value === 'object') {
+  if (Array.isArray(value)) {
+    return value.length === 0;
+  } else if (typeof value === 'object') {
     // eslint-disable-next-line no-unreachable-loop, guard-for-in
     if (value) for (let key in value) return false;
     return true;
+  } else {
+    return !value || value === '';
   }
-  return !value || value === '';
 }
 
 // eslint-disable-next-line complexity
@@ -31,32 +40,34 @@ export const FDSFormInputWrapper = (props) => {
     addOnBottom,
     addOnStart,
     alwaysShrinkLabel = false,
-    ariaLabel,
-    auxContent,
-    children,
-    comboboxKeyDown,
-    containerRef,
-    cursor,
-    hideLabel = false,
-    onFocusChange,
-    onPress,
-    shrinkLabelOnFocus = true,
-    suppressFocusRing,
-    value,
-    withHeaderMask = false,
     'aria-activedescendant': ariaActiveDescendant,
     'aria-controls': ariaControls,
     'aria-describedby': ariaDescribedBy,
     'aria-errormessage': ariaErrorMessage,
     'aria-expanded': ariaExpanded,
     'aria-haspopup': ariaHasPopup,
+    'aria-label': ariaLabel,
+    auxContent,
+    children,
+    // ariaLabel,
+    comboboxKeyDown,
+    containerRef,
+    cursor,
+    hideLabel = false,
+    onFocusChange,
+    onPress,
+    role,
+    shrinkLabelOnFocus = true,
+    suppressFocusRing,
+    value,
+    withHeaderMask = false,
+
     disabled = false,
     helperText,
     helperTextIsHidden = false,
     label,
     labelLocation_INTERNAL = 'inside',
     labelRef,
-    role,
     validationState,
   } = props;
 
@@ -69,25 +80,48 @@ export const FDSFormInputWrapper = (props) => {
   const [isShaking, setIsShaking] = React.useState(false);
   const [showValidationIcon, setShowValidationIcon] = React.useState(false);
 
+  const filled = !isEmpty(value);
+  const labelOutside = labelLocation_INTERNAL === 'outside';
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const LabelComponent = (highlighted) =>
+    labelOutside ? (
+      <label className={stylex(tempStyles.labelOutside)} suppressHydrationWarning>
+        {label}
+      </label>
+    ) : (
+      <span
+        className={stylex(
+          styles.label,
+          styles.labelInside,
+          gkx[6275] && m.labelInside,
+          validationState === 'ERROR' && (gkx[6275] ? m.labelError : styles.labelError),
+          !validationState && highlighted && (gkx[6275] ? m.labelHighlighted : styles.labelHighlighted),
+          (filled || alwaysShrinkLabel || (highlighted && shrinkLabelOnFocus)) && styles.labelShrunk,
+          disabled && styles.labelDisabled,
+        )}
+        ref={labelRef}
+      >
+        {label}
+      </span>
+    );
+
+  const handleMouseEnter = () => {
+    !isHovered && setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    isHovered && setIsHovered(false);
+  };
+
   const inputRef = React.useRef(null);
   const rootRef = React.useRef(null);
-
   const isCombobox = role === 'combobox';
-
   const validationAnnouncement = useBaseInputValidationAnnouncement({
     label,
     validationState,
   });
-
   const mergedRefs = useMergeRefs(inputRef, containerRef, isCombobox ? validationAnnouncement : null);
-
-  const handleMouseEnter = React.useCallback(() => {
-    !isHovered && setIsHovered(true);
-  }, [isHovered]);
-
-  const handleMouseLeave = React.useCallback(() => {
-    isHovered && setIsHovered(false);
-  }, [isHovered]);
 
   const ariaProps = {
     'aria-busy': validationState === 'LOADING' ? true : undefined,
@@ -115,7 +149,9 @@ export const FDSFormInputWrapper = (props) => {
   };
 
   React.useEffect(() => {
-    if (!comboboxKeyDown) return;
+    if (!comboboxKeyDown) {
+      return;
+    }
 
     const element = rootRef.current;
 
@@ -126,31 +162,6 @@ export const FDSFormInputWrapper = (props) => {
       };
     }
   }, [comboboxKeyDown]);
-
-  const filled = !isEmpty(value);
-  const labelOutside = labelLocation_INTERNAL === 'outside';
-
-  // eslint-disable-next-line react/no-unstable-nested-components
-  const LabelComponent = (highlighted) =>
-    labelOutside ? (
-      <label className={stylex(tempStyles.labelOutside)} suppressHydrationWarning>
-        {label}
-      </label>
-    ) : (
-      <span
-        className={stylex(
-          styles.label,
-          styles.labelInside,
-          validationState === 'ERROR' && styles.labelError,
-          !validationState && highlighted && styles.labelHighlighted,
-          (filled || alwaysShrinkLabel || (highlighted && shrinkLabelOnFocus)) && styles.labelShrunk,
-          disabled && styles.labelDisabled,
-        )}
-        ref={labelRef}
-      >
-        {label}
-      </span>
-    );
 
   return (
     <div className={stylex(tempStyles.wrapper)} ref={rootRef}>
@@ -163,17 +174,9 @@ export const FDSFormInputWrapper = (props) => {
             <BaseFocusRing suppressFocusRing={!showValidationIcon || suppressFocusRing}>
               {/* eslint-disable-next-line complexity */}
               {(focusStyle) => (
-                <label
-                  {...(isCombobox ? ariaProps : {})}
-                  aria-activedescendant={ariaActiveDescendant}
-                  aria-controls={ariaControls}
-                  aria-disabled={isCombobox && disabled ? true : undefined}
-                  aria-expanded={ariaExpanded}
-                  aria-haspopup={ariaHasPopup}
-                  aria-label={ariaLabel ? ariaLabel : label}
-                  className={stylex(
+                <div
+                  {...stylex.props(
                     styles.root,
-                    isBlueprintStylesEnabled() && blueprintStyles.root,
                     cursorStyles[cursor],
                     isHovered && styles.hovered,
                     focused && styles.focusRing,
@@ -191,24 +194,33 @@ export const FDSFormInputWrapper = (props) => {
                     isShaking && styles.shake,
                     focusStyle,
                   )}
-                  htmlFor={id}
-                  onAnimationEnd={() => setIsShaking(false)}
-                  onClick={(event) => {
-                    disabled ? setIsShaking(true) : onPress && onPress(event);
-                  }}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                  ref={mergedRefs}
-                  role={onPress ? (role ? role : 'button') : undefined}
-                  suppressHydrationWarning
-                  tabIndex={onPress ? 0 : undefined}
                 >
-                  <div className={stylex(tempStyles.flex)}>
+                  <label
+                    {...(isCombobox ? ariaProps : {})}
+                    aria-activedescendant={ariaActiveDescendant}
+                    aria-controls={ariaControls}
+                    aria-disabled={isCombobox && disabled ? true : undefined}
+                    aria-expanded={ariaExpanded}
+                    aria-haspopup={ariaHasPopup}
+                    aria-label={ariaLabel ? ariaLabel : label}
+                    className={stylex(tempStyles.flex)}
+                    htmlFor={id}
+                    onAnimationEnd={() => setIsShaking(false)}
+                    onClick={(event) => {
+                      disabled ? setIsShaking(true) : onPress && onPress(event);
+                    }}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    ref={mergedRefs}
+                    role={onPress ? (role ? role : 'button') : undefined}
+                    suppressHydrationWarning
+                    tabIndex={onPress ? 0 : undefined}
+                  >
                     {addOnStart}
                     <div className={stylex(tempStyles.wrapper02)}>
                       {withHeaderMask && !disabled && (filled || focused) && (
                         <span
-                          className={stylex(
+                          {...stylex.props(
                             styles.headerMask,
                             validationState === 'WARN' && isHovered && styles.warnHovered,
                             validationState === 'ERROR' && isHovered && styles.errorHovered,
@@ -229,13 +241,11 @@ export const FDSFormInputWrapper = (props) => {
                       </FocusWithinHandler>
                     </div>
                     {(auxContent || validationState) && (
-                      <div
-                        style={{
-                          display: 'flex',
-                        }}
-                      >
+                      <div className={stylex(styles.t3)}>
                         {validationState && (
-                          <div className={stylex(styles.validationIcon, hideLabel && styles.validationIconHideLabel)}>
+                          <div {...stylex.props(styles.validationIcon, hideLabel && styles.validationIconHideLabel)}>
+                            <FDSFormInputValidationStateIcon {...validationIconProps} state={validationState} />
+
                             {FDSFormInputValidationStateIcon[validationState] &&
                               FDSFormInputValidationStateIcon[validationState](validationIconProps)}
                           </div>
@@ -243,9 +253,9 @@ export const FDSFormInputWrapper = (props) => {
                         {auxContent}
                       </div>
                     )}
-                  </div>
-                  {addOnBottom}
-                </label>
+                    {addOnBottom}
+                  </label>
+                </div>
               )}
             </BaseFocusRing>
           );
@@ -450,6 +460,18 @@ const styles = stylex.create({
   },
 });
 
+const m = stylex.create({
+  labelError: {
+    color: 'var(--secondary-text)',
+  },
+  labelHighlighted: {
+    color: 'var(--text-input-active-text)',
+  },
+  labelInside: {
+    color: 'var(--secondary-text)',
+  },
+});
+
 const cursorStyles = stylex.create({
   pointer: {
     cursor: 'pointer',
@@ -459,14 +481,14 @@ const cursorStyles = stylex.create({
   },
 });
 
-const blueprintStyles = stylex.create({
-  root: {
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
-    borderBottomRightRadius: '12px',
-    borderBottomLeftRadius: '12px',
-  },
-});
+// const blueprintStyles = stylex.create({
+//   root: {
+//     borderTopLeftRadius: '12px',
+//     borderTopRightRadius: '12px',
+//     borderBottomRightRadius: '12px',
+//     borderBottomLeftRadius: '12px',
+//   },
+// });
 
 const tempStyles = stylex.create({
   labelOutside: {
@@ -513,5 +535,9 @@ const tempStyles = stylex.create({
     overflowY: 'hidden',
     position: 'absolute',
     width: '1px',
+  },
+
+  t3: {
+    display: 'flex',
   },
 });

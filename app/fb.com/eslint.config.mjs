@@ -88,6 +88,7 @@ export default [
             ['@fb-dialog', './src/dialog'],
             ['@fb-glimmer', './src/glimmer'],
             ['@fb-process-ring', './src/process-ring'],
+            ['@fb-input', './src/input'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'], // Ensure extensions are covered
         },

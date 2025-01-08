@@ -22,6 +22,9 @@ const BUTTON_ICON_RATIOS = {
   48: 32,
 };
 
+/**
+ * @type React.ForwardRefRenderFunction<React.FunctionComponent, import("./types").FDSCircleButtonProps>
+ */
 const FDSCircleButton = forwardRef((props, ref) => {
   const {
     color_DEPRECATED,

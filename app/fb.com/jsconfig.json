@@ -27,7 +27,9 @@
       "@fb-button/*": ["./src/button/*"],
       "@fb-network/*": ["./src/network/*"],
       "@fb-dialog/*": ["./src/dialog/*"],
-      "@fb-glimmer/*": ["./src/glimmer/*"]
+      "@fb-glimmer/*": ["./src/glimmer/*"],
+      "@fb-process-ring/*": ["./src/process-ring/*"],
+      "@fb-input/*": ["./src/input/*"]
     }
   }
 }

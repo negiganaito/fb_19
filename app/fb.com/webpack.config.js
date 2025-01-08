@@ -65,6 +65,7 @@ module.exports = (env, { mode }) => {
         '@fb-dialog': path.resolve(__dirname, 'src/dialog'),
         '@fb-glimmer': path.resolve(__dirname, 'src/glimmer'),
         '@fb-process-ring': path.resolve(__dirname, 'src/process-ring'),
+        '@fb-input': path.resolve(__dirname, 'src/input'),
       },
 
       fallback: {

@@ -1,8 +1,7 @@
 /**
  * Changelog:
- * - 09/12/2024
+ * - 08/01/2025
  */
-
 import React from 'react';
 
 import { CometErrorBoundary } from './CometErrorBoundary';
@@ -17,12 +16,9 @@ export const RecoverableViolationWithComponentStack = (props) => {
   const { errorMessage, fallback, projectName } = props;
 
   return (
-    <CometErrorBoundary
-      context={{ project: projectName, type: 'error' }}
-      fallback={() => fallback ?? null}
-      // eslint-disable-next-line react/no-children-prop
-      children={<ThrowErr errorMessage={errorMessage} />}
-    />
+    <CometErrorBoundary context={{ project: projectName, type: 'error' }} fallback={() => fallback ?? null}>
+      <ThrowErr errorMessage={errorMessage} />
+    </CometErrorBoundary>
   );
 };
 

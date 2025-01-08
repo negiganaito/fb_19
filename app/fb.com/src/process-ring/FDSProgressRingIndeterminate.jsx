@@ -5,6 +5,8 @@
  * See the LICENSE file in the root directory for details.
  */
 import React from 'react';
+import { BaseLoadingStateElement } from '@fb-glimmer/BaseLoadingStateElement';
+import { CometImageFromIXValue } from '@fb-image/CometImageFromIXValue';
 import { useCurrentDisplayMode } from '@fb-theme/useCurrentDisplayMode';
 import stylex from '@stylexjs/stylex';
 
@@ -13,9 +15,9 @@ import { FDSProgressRingUtils } from './FDSProgressRingUtils';
 const strokeWidth = 2;
 const defaultClassName = 'always-enable-animations';
 
-export function CometProgressRingIndeterminate({ color, size, xstyle }) {
+export function FDSProgressRingIndeterminate({ color, size, xstyle }) {
   const { foregroundColor } = FDSProgressRingUtils.getRingColor(color);
-  let strokeDasharray = (size - strokeWidth) * Math.PI;
+  const strokeDasharray = (size - strokeWidth) * Math.PI;
   const isDark = useCurrentDisplayMode() === 'dark';
   const source = FDSProgressRingUtils.getRingGifUrl(color, size.toString(), isDark ? 'dark' : 'light');
 

@@ -5,59 +5,69 @@
  * See the LICENSE file in the root directory for details.
  */
 
+/**
+ * Changelog:
+ * - 08/01/2025
+ */
+
 import React from 'react';
+import { CautionTriangleFilled12 } from '@fb-icons/CautionTriangleFilled12';
 import { fbicon } from '@fb-image/fbicon';
 import { FDSIcon } from '@fb-image/FDSIcon';
 import { ix } from '@fb-image/ix';
+import { FDSProgressRingIndeterminate } from '@fb-process-ring/FDSProgressRingIndeterminate';
+import { gkx } from '@fb-utils/gkx';
 
-export const FDSFormInputValidationStateIcon = {
-  //
-  CORRECT: (props = {}) => {
-    const { hidden, id, label } = props;
+export const FDSFormInputValidationStateIcon = (props) => {
+  const { state, hidden, id, label } = props;
 
-    return (
-      <FDSIcon
-        alt={label}
-        id={id}
-        isDecorative={hidden}
-        color="positive"
-        icon={fbicon._(ix(498146), 20)}
-        testid={undefined}
-      />
-    );
-  },
-  //
-  ERROR: (props = {}) => {
-    const { hidden, id, label } = props;
+  switch (state) {
+    case 'CORRECT':
+      return (
+        <FDSIcon
+          alt={label}
+          color="positive"
+          icon={fbicon._(ix(498146), 20)}
+          id={id}
+          isDecorative={hidden}
+          testid={undefined}
+        />
+      );
+    case 'ERROR':
+      return (
+        <FDSIcon
+          alt={label}
+          color="negative"
+          icon={fbicon._(ix(502062), 20)}
+          id={id}
+          isDecorative={hidden}
+          testid={undefined}
+        />
+      );
 
-    return (
-      <FDSIcon
-        alt={label}
-        id={id}
-        isDecorative={hidden}
-        color="negative"
-        icon={fbicon._(ix(502062), 20)}
-        testid={undefined}
-      />
-    );
-  },
-  //
-  LOADING: (props = {}) => {
-    const { hidden, id, label } = props;
-    return <CometProgressRingIndeterminate alt={label} id={id} isDecorative={hidden} color="disabled" size={20} />;
-  },
-  //
-  WARN: (props = {}) => {
-    const { hidden, id, label } = props;
-    return (
-      <FDSIcon
-        alt={label}
-        id={id}
-        isDecorative={hidden}
-        color="warning"
-        icon={fbicon._(ix(502062), 20)}
-        testid={undefined}
-      />
-    );
-  },
+    case 'LOADING':
+      return (
+        <FDSProgressRingIndeterminate
+          alt={label}
+          id={id}
+          isDecorative={hidden}
+          color={gkx[6275] ? 'dark' : 'disabled_DEPRECATED'}
+          size={20}
+          testid={undefined}
+        />
+      );
+
+    case 'WARN':
+      return (
+        <FDSIcon
+          alt={label}
+          color="warning"
+          icon={gkx[6275] ? <CautionTriangleFilled12 /> : fbicon._(ix(502062), 20)}
+          id={id}
+          isDecorative={hidden}
+          size={gkx[6275] ? 20 : undefined}
+          testid={undefined}
+        />
+      );
+  }
 };
