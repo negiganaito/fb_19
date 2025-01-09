@@ -5,6 +5,6 @@
  * See the LICENSE file in the root directory for details.
  */
 
-import { CometScrollableAreaImpl } from './CometScrollableAreaImpl';
+import { CometScrollableAreaImpl } from './CometScrollableArea';
 
 export const CometScrollableArea = CometScrollableAreaImpl;
