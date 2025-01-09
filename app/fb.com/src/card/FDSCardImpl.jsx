@@ -6,9 +6,16 @@
  */
 
 import React, { forwardRef } from 'react';
+import { html } from 'react-strict-dom';
+import { BaseView } from '@fb-layout/BaseView';
+import { testID } from '@fb-utils/testID';
+import { XPlatReactEnvironment } from '@fb-utils/XPlatReactEnvironment';
 import stylex from '@stylexjs/stylex';
 
-export const CometCard = forwardRef((props, ref) => {
+import { FDSCardNewHighlightAnimation } from './FDSCardNewHighlightAnimation';
+
+// eslint-disable-next-line complexity
+export const FDSCardImpl = forwardRef((props, ref) => {
   const {
     allowOverflow = false,
     background = 'transparent',
@@ -25,21 +32,34 @@ export const CometCard = forwardRef((props, ref) => {
     scrollable = false,
   } = props;
 
+  const scrollableProps =
+    al && focusable
+      ? {
+          'aria-label': al,
+          tabIndex: 0,
+        }
+      : all && focusable
+      ? {
+          'aria-labelledby': all,
+          tabIndex: 0,
+        }
+      : {};
+
   const dropShadowStyle = dropShadowStyles[dropShadow];
 
   return (
-    <div className={stylex(borderStyles.container, expanding && borderStyles.expanding)} {...testID(testid)}>
+    <html.div style={[borderStyles.container, expanding && borderStyles.expanding]} {...testID(testid)}>
       <BaseView
         ref={ref}
         style={{
-          borderRadius: isBlueprintStylesEnabled()
-            ? 'max(0px, min(12px, calc((100vw - 4px - 100%) * 9999))) / 12px'
-            : 'max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px',
+          borderRadius: XPlatReactEnvironment.isWeb()
+            ? 'max(0px, min(var(--card-corner-radius), calc((100vw - 4px - 100%) * 9999))) / var(--card-corner-radius)'
+            : void 0,
         }}
         xstyle={[
           backgroundStyles[background],
-          border === 'solid' && background !== 'white' && borderStyles.borderOnWash,
-          border === 'solid' && background === 'white' && borderStyles.borderOnWhite,
+          border === 'solid' && background !== 'default' && borderStyles.borderOnWash,
+          border === 'solid' && background === 'default' && borderStyles.borderOnWhite,
           border === 'solid' && borderStyles.borderSolid,
           borderStyles.root,
           !allowOverflow && borderStyles.overflowHidden,
@@ -47,18 +67,15 @@ export const CometCard = forwardRef((props, ref) => {
           xstyle,
         ]}
       >
-        {children}
+        {scrollable ? <CometScrollableArea {...scrollableProps}>{children}</CometScrollableArea> : children}
       </BaseView>
-      {border === 'inset' && <div className={stylex(styles.inset)} />}
-      {borderHighlight && (
-        <div
-          className={stylex(
-            borderStyles.borderHighlightOverlay,
-            borderHighlight === 'animated' && borderStyles.borderHighlightAnimation,
-          )}
-        />
+      {border === 'inset' && <html.div style={borderStyles.borderInset} />}
+      {borderHighlight && XPlatReactEnvironment.isWeb() && borderHighlight === 'animated' ? (
+        <FDSCardNewHighlightAnimation xstyle={borderStyles.borderHighlightOverlay} />
+      ) : (
+        <html.div style={[borderStyles.borderHighlightOverlay]} />
       )}
-    </div>
+    </html.div>
   );
 });
 
@@ -72,6 +89,9 @@ const backgroundStyles = stylex.create({
   'dark-wash': {
     backgroundColor: 'var(--shadow-5)',
   },
+  default: {
+    backgroundColor: 'var(--card-background)',
+  },
   error: {
     backgroundColor: 'var(--negative)',
   },
@@ -84,67 +104,73 @@ const backgroundStyles = stylex.create({
   transparent: {
     backgroundColor: 'transparent',
   },
-  white: {
-    backgroundColor: 'var(--surface-background)',
-  },
-});
-
-const x1f7kpggB = stylex.keyframes({
-  '0%': {
-    borderTop: '2px solid var(--accent)',
-    borderRight: '2px solid var(--accent)',
-    borderBottom: '2px solid var(--accent)',
-    borderLeft: '2px solid var(--accent)',
-  },
-
-  '100%': {
-    borderTop: '2px solid transparent',
-    borderRight: '2px solid transparent',
-    borderBottom: '2px solid transparent',
-    borderLeft: '2px solid transparent',
-  },
 });
 
 const borderStyles = stylex.create({
-  borderHighlightAnimation: {
-    animationDuration: '1s',
-    animationFillMode: 'both',
-    animationName: x1f7kpggB,
-    animationTimingFunction: 'cubic-bezier(.25,.75,.75,.25)',
-  },
   borderHighlightOverlay: {
-    borderColor: 'var(--accent)',
-    borderRadius: '10px',
-    borderStyle: 'solid',
-    borderWidth: '2px',
+    borderTopColor: 'var(--accent)',
+    borderRightColor: 'var(--accent)',
+    borderBottomColor: 'var(--accent)',
+    borderLeftColor: 'var(--accent)',
+    borderTopLeftRadius: '10px',
+    borderTopRightRadius: '10px',
+    borderBottomRightRadius: '10px',
+    borderBottomLeftRadius: '10px',
+    borderTopStyle: 'solid',
+    borderRightStyle: 'solid',
+    borderBottomStyle: 'solid',
+    borderLeftStyle: 'solid',
+    borderTopWidth: '2px',
+    borderRightWidth: '2px',
+    borderBottomWidth: '2px',
+    borderLeftWidth: '2px',
     bottom: '-2px',
-    right: '-2px',
+    left: '-2px',
     pointerEvents: 'none',
     position: 'absolute',
-    left: '-2px',
+    right: '-2px',
+    // start: null,
+    // end: null,
     top: '-2px',
-    zIndex: '1',
+    zIndex: 1,
   },
   borderInset: {
-    borderRadius: '8px',
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
+    borderBottomRightRadius: '8px',
+    borderBottomLeftRadius: '8px',
     bottom: '0',
     boxShadow: 'inset 0 0 0 1px var(--media-inner-border)',
     boxSizing: 'border-box',
-    right: '0',
+    left: '0',
     pointerEvents: 'none',
     position: 'absolute',
-    left: '0',
+    right: '0',
+    // start: null,
+    // end: null,
     top: '0',
   },
   borderOnWash: {
-    borderColor: 'var(--divider)',
+    borderTopColor: 'var(--divider)',
+    borderRightColor: 'var(--divider)',
+    borderBottomColor: 'var(--divider)',
+    borderLeftColor: 'var(--divider)',
   },
   borderOnWhite: {
-    borderColor: 'var(--divider)',
+    borderTopColor: 'var(--divider)',
+    borderRightColor: 'var(--divider)',
+    borderBottomColor: 'var(--divider)',
+    borderLeftColor: 'var(--divider)',
   },
   borderSolid: {
-    borderWidth: '1px',
-    borderStyle: 'solid',
+    borderTopStyle: 'solid',
+    borderRightStyle: 'solid',
+    borderBottomStyle: 'solid',
+    borderLeftStyle: 'solid',
+    borderTopWidth: '1px',
+    borderRightWidth: '1px',
+    borderBottomWidth: '1px',
+    borderLeftWidth: '1px',
   },
   container: {
     display: 'flex',
@@ -152,37 +178,28 @@ const borderStyles = stylex.create({
     width: '100%',
   },
   expanding: {
-    flexGrow: '1',
+    flexGrow: 1,
   },
   overflowHidden: {
     overflowX: 'hidden',
     overflowY: 'hidden',
   },
   root: {
-    borderRadius: 'var(--card-corner-radius)',
+    borderTopLeftRadius: 'var(--card-corner-radius)',
+    borderTopRightRadius: 'var(--card-corner-radius)',
+    borderBottomRightRadius: 'var(--card-corner-radius)',
+    borderBottomLeftRadius: 'var(--card-corner-radius)',
+    boxSizing: 'border-box',
     width: '100%',
   },
 });
 
 const dropShadowStyles = stylex.create({
+  0: {},
   1: {
     boxShadow: '0 1px 2px var(--shadow-2)',
   },
   2: {
     boxShadow: '0 2px 12px var(--shadow-2)',
-  },
-});
-
-const styles = stylex.create({
-  inset: {
-    borderRadius: '8px',
-    bottom: 0,
-    boxShadow: 'inset 0 0 0 1px var(--media-inner-border)',
-    boxSizing: 'border-box',
-    right: 0,
-    pointerEvents: 'none',
-    position: 'absolute',
-    left: 0,
-    top: 0,
   },
 });
